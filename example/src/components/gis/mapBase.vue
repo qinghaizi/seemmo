@@ -1,15 +1,18 @@
-<!--
- * @LastEditors: lyuwei
- * @Author: lyuwei
- * @Date: 2019-02-21 11:44:42
- * @LastEditTime: 2019-05-24 17:40:24
- -->
+/**
+* Created by lyuwei
+* User: lvwei@seemmo.com
+* Date: 2018/09/12
+* Describe:
+* Log:
+*  ---- 2018/09/12 09:55 [lyuwei] 初次添加
+*/
 <template>
   <div :id="mapdivname"></div>
 </template>
 
 <script>
-import { Map } from '#/index'
+import { toLonLat } from 'ol/proj'
+
 export default {
   name: 'mapBase',
 
@@ -20,19 +23,26 @@ export default {
     }
   },
 
-  mounted: function () {
-    this.thismap = new Map(this.mapdivname, {
-      serviceUrl: 'http://localhost:8080',
-      resourceUrl: process.env.BASE_URL + 'map_resource',
-      zoomSlide: true
-    })
-    this.thismap.on('load', () => {
-      this.$emit('mapInited')
-      console.log(this.thismap)
-    })
+  created: function () {
+    import('./olBase.js').then(
+      (olbase) => {
+        this.thismap = olbase.initMap(this.mapdivname)
+
+        this.$emit('mapInited')
+
+        console.log(this.thismap)
+      }
+    )
   },
 
-  methods: {}
+  methods: {
+    pointerMoveHandler (evt) {
+      if (evt.dragging) {
+        return
+      }
+      this.thismap.setMouseTips(toLonLat(evt.coordinate).toString())
+    }
+  }
 }
 </script>
 

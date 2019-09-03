@@ -1,8 +1,10 @@
-/*
- * @LastEditors: lyuwei
- * @Author: lyuwei
- * @Date: 2018-12-18 21:53:06
- * @LastEditTime: 2019-04-10 15:25:53
+/**
+ * Created by lyuwei
+ * User: lvwei@seemmo.com
+ * Date: 2018/12/18
+ * Describe:
+ * Log:
+ *  ---- 2018/12/18 10:04 [lyuwei] 初次添加
  */
 
 const utils = require('./utils')
@@ -13,7 +15,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = merge(webpackBaseConfig, {
   mode: 'production',
   entry: {
-    seemap: './src/index.ts'
+    seemap: './src/index.js'
   },
   output: {
     path: utils.resolveDir('dist'),
@@ -22,7 +24,20 @@ module.exports = merge(webpackBaseConfig, {
     library: 'seemap',
     libraryTarget: 'umd',
   },
-  externals: {},
+  externals: {
+    vue: {
+      root: 'Vue',
+      commonjs: 'vue',
+      commonjs2: 'vue',
+      amd: 'vue'
+    },
+    ol: {
+      root: 'ol',
+      commonjs: 'ol',
+      commonjs2: 'ol',
+      amd: 'ol'
+    },
+  },
   // prod 的文件中是不包含vue文件的
   module: {
     noParse: /^(ol|vue)/,

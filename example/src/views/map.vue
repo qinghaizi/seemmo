@@ -1,10 +1,11 @@
-<!--
- * @LastEditors: lyuwei
- * @Author: lyuwei
- * @Date: 2018-12-24 14:04:31
- * @LastEditTime: 2019-04-29 14:21:37
- -->
-
+/**
+* Created by lyuwei
+* User: lvwei@seemmo.com
+* Date: 2018/12/10
+* Describe:
+* Log:
+*  ---- 2018/12/10 17:28 [lyuwei] 初次添加
+*/
 <template>
   <el-container>
     <el-main>
@@ -24,6 +25,7 @@
 <script>
 import MapBase from '../components/gis/mapBase'
 import { SeeGate } from '#/index'
+import { toLonLat } from 'ol/proj'
 export default {
   name: 'gate',
   components: {
@@ -178,20 +180,23 @@ export default {
   },
   methods: {
     mapInited: function () {
-      this.seeGate = new SeeGate({}).addTo(this.$refs.map.thismap).createGateFeatures(this.gateDatas)
-      this.$refs.map.thismap.on('mousemove', this.pointerMoveHandler)
-      this.$refs.map.thismap.on('click', this.addGateFeatures)
+      this.seeGate = new SeeGate({}, this.styleJsonFunction).addTo(this.$refs.map.thismap).createGateFeatures(this.gateDatas)
+      this.$refs.map.thismap.on('pointermove', this.pointerMoveHandler)
+      this.$refs.map.thismap.on('singleclick', this.addGateFeatures)
     },
     pointerMoveHandler (evt) {
+      if (evt.dragging) {
+        return
+      }
       let innerHtml = null
       if (this.isShowMouseTips) {
-        innerHtml = evt.lngLat.toString()
+        innerHtml = toLonLat(evt.coordinate).toString()
       }
       this.$refs.map.thismap.setMouseTips(innerHtml)
-      // this.$refs.map.thismap.mouseTips.setLngLat(evt.lngLat).setHTML(`<div>${evt.lngLat.toString()}</div>`).addTo(this.$refs.map.thismap)
     },
     addGateFeatures (evt) {
-      const position = evt.lngLat
+      const position = toLonLat(evt.coordinate)
+      const [lng, lat] = position
       const nodeId = new Date().getTime()
       let gate = [{
         nodeId,
@@ -200,27 +205,27 @@ export default {
         'nodeName': String(nodeId).slice(10, 13),
         'nodeType': '2',
         'lastDataTime': '1543816824294',
-        'lng': position.lng,
-        'lat': position.lat,
+        lng,
+        lat,
         'nodeStatus': '1'
       }]
       this.seeGate.addGateFeatures(gate)
     },
-    // styleJsonFunction (feature, mapZoom) {
-    //   let json = {
-    //     image: {
-    //       type: 'icon',
-    //       value: {
-    //         src: this.BASE_URL + 'gate/normal.png',
-    //         scale: 0.8,
-    //       }
-    //     }
-    //   }
-    //   if (feature.get('selected')) {
-    //     json.image.value.src = this.BASE_URL + 'gate/warm.png'
-    //   }
-    //   return json
-    // }
+    styleJsonFunction (feature, mapZoom) {
+      let json = {
+        image: {
+          type: 'icon',
+          value: {
+            src: this.BASE_URL + 'gate/normal.png',
+            scale: 0.8,
+          }
+        }
+      }
+      if (feature.get('selected')) {
+        json.image.value.src = this.BASE_URL + 'gate/warm.png'
+      }
+      return json
+    }
   },
   mounted () { },
   destroyed () {

@@ -19,34 +19,9 @@ let router = new Router({
       component: () => import('./views/navgation.vue'),
     },
     {
-      path: '/mapXYZ',
-      name: 'xyz离线底图',
-      component: () => import('./views/mapXYZ.vue')
-    },
-    {
-      path: '/mapXYZstyle',
-      name: '切换xyz离线底图',
-      component: () => import('./views/mapXYZStyle.vue')
-    },
-    {
-      path: '/mapStyle',
-      name: '矢量底图切换样式',
-      component: () => import('./views/mapStyle.vue')
-    },
-    {
-      path: '/changelayer',
-      name: 'baselayer切换',
-      component: () => import('./views/changeBaselayer.vue')
-    },
-    {
       path: '/map',
       name: '地图',
       component: () => import('./views/map.vue')
-    },
-    {
-      path: '/debug',
-      name: '调试',
-      component: () => import('./views/debug.vue')
     },
     {
       path: '/gate',
@@ -67,11 +42,6 @@ let router = new Router({
       path: '/pop',
       name: '弹出框',
       component: () => import('./views/pop.vue')
-    },
-    {
-      path: '/marker',
-      name: '图标',
-      component: () => import('./views/marker.vue')
     },
     {
       path: '/short',

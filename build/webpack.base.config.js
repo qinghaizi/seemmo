@@ -15,9 +15,10 @@ module.exports = {
   resolve: {
     alias: {
       '#': utils.resolveDir('src'),
+      '@': utils.resolveDir('example/src'),
       vue$: 'vue/dist/vue.runtime.esm.js'
     },
-    extensions: ['.js', '.jsx', '.vue', '.json', '.ts'],
+    extensions: ['.js', '.jsx', '.vue', '.json'],
     modules: ['node_modules']
   },
   module: {
@@ -38,6 +39,30 @@ module.exports = {
         }]
       },
       {
+        test: /\.(svg)(\?.*)?$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: 'img/[name].[ext]'
+          }
+        }]
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 4096,
+            fallback: {
+              loader: 'file-loader',
+              options: {
+                name: 'media/[name].[ext]'
+              }
+            }
+          }
+        }]
+      },
+      {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
         use: [{
           loader: 'url-loader',
@@ -52,23 +77,6 @@ module.exports = {
           }
         }]
       },
-      {
-        test: /\.tsx?$/,
-        use: [
-            // tsc编译后，再用babel处理
-            { loader: 'babel-loader' },
-            {
-                loader: 'ts-loader',
-                options: {
-                    // 加快编译速度
-                    transpileOnly: true,
-                    // 指定特定的ts编译配置，为了区分脚本的ts配置
-                    configFile: path.resolve(__dirname, '../tsconfig.json')
-                }
-            }
-        ],
-        exclude: /node_modules/
-    },
     ]
   },
   plugins: [

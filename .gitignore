@@ -21,6 +21,3 @@ yarn-error.log*
 
 # npm lock file
 package-lock.json
-
-# dist
-dist

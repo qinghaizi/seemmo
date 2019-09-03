@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import './common/basic.less'
+import '@/common/basic.less'
 
 export default {
   name: 'app'

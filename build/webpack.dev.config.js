@@ -18,7 +18,8 @@ const merge = require('webpack-merge')
 const utils = require('./utils')
 const webpackBaseConfig = require('./webpack.base.config')
 
-const devPort = 8080
+const target = 'http://10.10.4.156:8081'
+const devPort = 8000
 
 module.exports = merge(webpackBaseConfig, {
   mode: 'development',
@@ -299,9 +300,6 @@ module.exports = merge(webpackBaseConfig, {
         { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
       ],
     },
-    headers: {
-      'Access-Control-Allow-Origin': '*'
-    },
     hot: true,
     contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,
@@ -313,18 +311,12 @@ module.exports = merge(webpackBaseConfig, {
       errors: true
     },
     proxy: {
-      '/vectors/tiled': {// 矢量切片接口
-        // target: 'http://192.168.2.7:18081', // 接口域名
-        target: 'http://192.168.2.7:8081/api/platform/map/service', // 接口域名
-        changeOrigin: true // 是否跨域
-      },
-      '/offlines/tiled': {// 栅格切片接口
-        // target: 'http://192.168.2.7:18081', // 接口域名
-        target: 'http://192.168.2.7:8081/api/platform/map/service', // 接口域名
+      '/tiled': {
+        target: target, // 接口域名
         changeOrigin: true // 是否跨域
       },
       '/analysis': {
-        target: 'http://10.10.4.156:8081', // 接口域名
+        target: target, // 接口域名
         changeOrigin: true // 是否跨域
       },
     }

@@ -1,10 +1,11 @@
-<!--
- * @LastEditors: lyuwei
- * @Author: lyuwei
- * @Date: 2019-01-03 10:57:52
- * @LastEditTime: 2019-05-09 17:33:14
- -->
-
+/**
+* Created by lyuwei
+* User: lvwei@seemmo.com
+* Date: 2018/12/10
+* Describe:
+* Log:
+*  ---- 2018/12/10 17:28 [lyuwei] 初次添加
+*/
 <template>
   <el-container>
     <el-main>
@@ -13,8 +14,7 @@
     <el-aside width="300px">
       <div class="tree-area">
         <el-tree v-show="isShowTree" :data="gateDatas" :props="defaultProps" ></el-tree>
-        <el-tag v-show="currentGate" type="success" style="float:left;margin-top:10px;">当前点击:{{currentGate}}</el-tag>
-        <el-tag v-show="currentUnGate" type="error" style="float:left;margin-top:10px;">当前取消选中:{{currentUnGate}}</el-tag>
+        <el-tag v-show="currentGate" type="success" style="float:left;margin-top:10px;">当前选中:{{currentGate}}</el-tag>
       </div>
       <div>
         <el-row class="btn-wrap">
@@ -34,7 +34,10 @@
 
 <script>
 import MapBase from '../components/gis/mapBase'
-import { SeeGate } from '#/index'
+import {
+  SeeGate,
+  SeeGateEventType
+} from '#/index'
 export default {
   name: 'gate',
   components: {
@@ -198,7 +201,6 @@ export default {
       seeGate: null,
       isShowTree: false,
       currentGate: '',
-      currentUnGate: '',
       level: 1
     }
   },
@@ -208,32 +210,13 @@ export default {
       // 可点击卡口
       // this.seeGate.changeGateClickEnable(true)
       // 监听卡口点击
-      this.seeGate.on('gateSelect', (eventObj) => {
-        if (eventObj.gates) {
-          this.currentGate = eventObj.gates.map(each => each['nodeName']).join(',')
-        }
-      })
-      this.seeGate.on('gateUnSelect', (eventObj) => {
-        if (eventObj.gates) {
-          this.currentUnGate = eventObj.gates.map(each => each['nodeName']).join(',')
-        }
+      this.seeGate.on(SeeGateEventType.GATESELECT, (eventObj) => {
+        this.currentGate = eventObj.gates.get('nodeName')
       })
     },
     createGateFeatures () {
       this.isShowTree = true
       this.level = 2
-      let gate84 = {
-          'nodeId': '99',
-          'parentId': '4',
-          'nodeCode': '444',
-          'nodeName': 'k484',
-          'nodeType': '2',
-          'lastDataTime': '1541061740247',
-          'lng': '114.39364319007817',
-          'lat': '30.507611099084592',
-          'nodeStatus': '1'
-        }
-      this.gateDatas.push(gate84)
       this.seeGate.createGateFeatures(this.gateDatas)
     },
     addGateFeatures () {
@@ -241,32 +224,14 @@ export default {
     },
     setStyle () {
       this.level = 3
-      this.seeGate.setStyle([
-        {
-          type: 'symbol',
-          layout: {
-            'icon-image': 'gate-{_icon}',
-            'icon-anchor': 'bottom',
-            // 设置是否进行碰撞检测，关闭则全部显示
-            'icon-allow-overlap': true
-          },
-          minzoom: 9,
-        },
-        {
-          type: 'circle',
-          paint: {
-            'circle-color': 'rgba(1, 0, 0, 1)'
-          },
-          maxzoom: 9
-        }
-      ])
+      this.seeGate.setStyle(this.styleJsonFunction)
     },
     changeGateClickEnable () {
       this.level = 4
       this.seeGate.changeGateClickEnable(true)
     },
     getSelectGateIds () {
-      const selectedId = this.seeGate.SelectedGateIds
+      const selectedId = this.seeGate.getSelectedGateIds()
       this.$notify({
         title: '选中之id',
         message: selectedId,
@@ -280,6 +245,21 @@ export default {
       this.currentGate = a.nodeName
       this.seeGate.setSelectedGates(a.nodeId)
     },
+    styleJsonFunction (feature, mapZoom) {
+      let json = {
+        image: {
+          type: 'icon',
+          value: {
+            src: this.BASE_URL + 'gate/normal_gray.png',
+            scale: 0.8,
+          }
+        }
+      }
+      if (feature.get('selected')) {
+        json.image.value.src = this.BASE_URL + 'gate/warm.png'
+      }
+      return json
+    }
   },
   mounted () { },
   destroyed () {
