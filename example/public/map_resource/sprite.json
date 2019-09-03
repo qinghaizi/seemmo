@@ -1,0 +1,18 @@
+{
+  "gate-click": {
+    "width": 74,
+    "height": 81,
+    "x": 0,
+    "y": 0,
+    "pixelRatio": 1,
+    "visible": true
+  },
+  "gate-normal": {
+    "width": 74,
+    "height": 81,
+    "x": 74,
+    "y": 0,
+    "pixelRatio": 1,
+    "visible": true
+  }
+}
