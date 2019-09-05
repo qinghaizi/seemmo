@@ -1,12 +1,9 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/05
- * Describe:
- * Log:
- *  ---- 2018/12/05 10:23 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 10:19:33
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 10:19:33
  */
-
 const config = require('./config')
 const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
@@ -40,8 +37,7 @@ module.exports = merge(webpackBaseConfig, {
   // },
   module: {
     noParse: /^(vue|vue-router|vuex|vuex-router-sync)$/,
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/,
         use: [{
           loader: 'vue-loader',
@@ -72,60 +68,58 @@ module.exports = merge(webpackBaseConfig, {
             }
           }]
         }, {
-        resourceQuery: /\?vue/,
-        use: [{
-          loader: 'vue-style-loader',
-          options: {
-            sourceMap: false,
-            shadowMode: false
-          }
+          resourceQuery: /\?vue/,
+          use: [{
+            loader: 'vue-style-loader',
+            options: {
+              sourceMap: false,
+              shadowMode: false
+            }
+          }, {
+            loader: 'css-loader',
+            options: {
+              sourceMap: false,
+              importLoaders: 2
+            }
+          }]
         }, {
-          loader: 'css-loader',
-          options: {
-            sourceMap: false,
-            importLoaders: 2
-          }
-        }]
-      }, {
-        test: /\.module\.\w+$/,
-        use: [{
-          loader: 'vue-style-loader',
-          options: {
-            sourceMap: false,
-            shadowMode: false
-          }
+          test: /\.module\.\w+$/,
+          use: [{
+            loader: 'vue-style-loader',
+            options: {
+              sourceMap: false,
+              shadowMode: false
+            }
+          }, {
+            loader: 'css-loader',
+            options: {
+              sourceMap: false,
+              importLoaders: 2,
+              modules: true,
+              localIdentName: '[name]_[local]_[hash:base64:5]'
+            }
+          }]
         }, {
-          loader: 'css-loader',
-          options: {
-            sourceMap: false,
-            importLoaders: 2,
-            modules: true,
-            localIdentName: '[name]_[local]_[hash:base64:5]'
-          }
+          use: [{
+            loader: 'vue-style-loader',
+            options: {
+              sourceMap: false,
+              shadowMode: false
+            }
+          }, {
+            loader: 'css-loader',
+            options: {
+              sourceMap: false,
+              importLoaders: 2
+            }
+          }]
         }]
-      }, {
-        use: [{
-          loader: 'vue-style-loader',
-          options: {
-            sourceMap: false,
-            shadowMode: false
-          }
-        }, {
-          loader: 'css-loader',
-          options: {
-            sourceMap: false,
-            importLoaders: 2
-          }
-        }]
-      }]
-    },
+      },
       {
         test: /\.less$/,
-        oneOf: [
-          {
+        oneOf: [{
             resourceQuery: /module/,
-            use: [
-              {
+            use: [{
                 loader: 'vue-style-loader',
                 options: {
                   sourceMap: false,
@@ -151,8 +145,7 @@ module.exports = merge(webpackBaseConfig, {
           },
           {
             resourceQuery: /\?vue/,
-            use: [
-              {
+            use: [{
                 loader: 'vue-style-loader',
                 options: {
                   sourceMap: false,
@@ -219,7 +212,7 @@ module.exports = merge(webpackBaseConfig, {
             }]
           }
         ]
-    },
+      },
       {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
@@ -235,14 +228,12 @@ module.exports = merge(webpackBaseConfig, {
   plugins: [
     new VueLoaderPlugin(),
     // 定义所有文件里面的变量对应的值
-    new webpack.DefinePlugin(
-      {
-        'process.env': {
-          NODE_ENV: '"development"',
-          BASE_URL: '"/"'
-        }
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"development"',
+        BASE_URL: '"/"'
       }
-    ),
+    }),
 
     // new CaseSensitivePathsPlugin(),
 
@@ -255,49 +246,48 @@ module.exports = merge(webpackBaseConfig, {
     // new webpack.ProgressPlugin(),
 
     // html模板里面的base_url设置
-    new HtmlWebpackPlugin(
-      {
-        templateParameters: (compilation, assets, pluginOptions) => {
-          // enhance html-webpack-plugin's built in template params
-          let stats
-          return Object.assign({
-            // make stats lazy as it is expensive
-            get webpack () {
-              return stats || (stats = compilation.getStats().toJson())
-            },
-            compilation: compilation,
-            webpackConfig: compilation.options,
-            htmlWebpackPlugin: {
-              files: assets,
-              options: pluginOptions
-            }
-          }, { BASE_URL: '/' })
-        },
-        template: utils.resolveDir('example/public/index.html')
-      }
-    ),
+    new HtmlWebpackPlugin({
+      templateParameters: (compilation, assets, pluginOptions) => {
+        // enhance html-webpack-plugin's built in template params
+        let stats
+        return Object.assign({
+          // make stats lazy as it is expensive
+          get webpack() {
+            return stats || (stats = compilation.getStats().toJson())
+          },
+          compilation: compilation,
+          webpackConfig: compilation.options,
+          htmlWebpackPlugin: {
+            files: assets,
+            options: pluginOptions
+          }
+        }, {
+          BASE_URL: '/'
+        })
+      },
+      template: utils.resolveDir('example/public/index.html')
+    }),
 
     new CopyWebpackPlugin(
-      [
-        {
-          from: utils.resolveDir('example/public'),
-          to: utils.resolveDir('dist/example'),
-          toType: 'dir',
-          ignore: [
-            'index.html',
-            '.DS_Store'
-          ]
-        }
-      ]
+      [{
+        from: utils.resolveDir('example/public'),
+        to: utils.resolveDir('dist/example'),
+        toType: 'dir',
+        ignore: [
+          'index.html',
+          '.DS_Store'
+        ]
+      }]
     )
 
   ],
   devServer: {
     clientLogLevel: 'warning',
     historyApiFallback: {
-      rewrites: [
-        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
-      ],
+      rewrites: [{
+        from: /.*/,
+        to: path.posix.join(config.dev.assetsPublicPath, 'index.html')
+      }, ],
     },
     headers: {
       'Access-Control-Allow-Origin': '*'
@@ -313,12 +303,12 @@ module.exports = merge(webpackBaseConfig, {
       errors: true
     },
     proxy: {
-      '/vectors/tiled': {// 矢量切片接口
+      '/vectors/tiled': { // 矢量切片接口
         // target: 'http://192.168.2.7:18081', // 接口域名
         target: 'http://192.168.2.7:8081/api/platform/map/service', // 接口域名
         changeOrigin: true // 是否跨域
       },
-      '/offlines/tiled': {// 栅格切片接口
+      '/offlines/tiled': { // 栅格切片接口
         // target: 'http://192.168.2.7:18081', // 接口域名
         target: 'http://192.168.2.7:8081/api/platform/map/service', // 接口域名
         changeOrigin: true // 是否跨域

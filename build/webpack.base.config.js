@@ -1,12 +1,9 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/17
- * Describe:
- * Log:
- *  ---- 2018/12/17 17:06 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 10:19:33
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:17:32
  */
-
 const path = require('path')
 const utils = require('./utils')
 
@@ -21,8 +18,7 @@ module.exports = {
     modules: ['node_modules']
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.(png|jpe?g|gif|webp)(\?.*)?$/,
         use: [{
           loader: 'url-loader',
@@ -55,20 +51,22 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: [
-            // tsc编译后，再用babel处理
-            { loader: 'babel-loader' },
-            {
-                loader: 'ts-loader',
-                options: {
-                    // 加快编译速度
-                    transpileOnly: true,
-                    // 指定特定的ts编译配置，为了区分脚本的ts配置
-                    configFile: path.resolve(__dirname, '../tsconfig.json')
-                }
+          // tsc编译后，再用babel处理
+          {
+            loader: 'babel-loader'
+          },
+          {
+            loader: 'ts-loader',
+            options: {
+              // 加快编译速度
+              transpileOnly: true,
+              // 指定特定的ts编译配置，为了区分脚本的ts配置
+              configFile: path.resolve(__dirname, '../tsconfig.json')
             }
+          }
         ],
         exclude: /node_modules/
-    },
+      },
     ]
   },
   plugins: [

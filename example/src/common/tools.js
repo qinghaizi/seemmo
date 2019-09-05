@@ -1,12 +1,14 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/09/10
- * Describe:
- * Log:
- *  ---- 2018/09/10 14:38 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 10:19:34
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 10:19:34
  */
-import { Loading, Message, Notification } from 'element-ui'
+import {
+  Loading,
+  Message,
+  Notification
+} from 'element-ui'
 
 let globalLoading = null
 
@@ -14,7 +16,7 @@ let globalLoading = null
  *全屏加载动画
  * @param {String} msg 提示性文字
  */
-function showLoading (msg) {
+function showLoading(msg) {
   globalLoading = Loading.service({
     lock: true,
     text: msg,
@@ -24,7 +26,7 @@ function showLoading (msg) {
   return globalLoading
 }
 
-function closeLoading () {
+function closeLoading() {
   if (globalLoading) {
     globalLoading.close()
     globalLoading = null
@@ -37,7 +39,7 @@ function closeLoading () {
  * @param {String} type 类型四种 success, warning, info, error
  * @param {Number||String} duration 持续时间，时间到即自动消失，传'0'则不自动消失。
  */
-function message (msg, type, duration) {
+function message(msg, type, duration) {
   return Message({
     showClose: true,
     message: msg,
@@ -53,7 +55,7 @@ function message (msg, type, duration) {
  * @param {String} title 通知标题
  * @param {Number||String} duration 持续时间，时间到即自动消失，传'0'则不自动消失。
  */
-function notify (msg, type, title, duration) {
+function notify(msg, type, title, duration) {
   return Notification({
     message: msg,
     type: type,
@@ -68,7 +70,7 @@ function notify (msg, type, title, duration) {
  * @param type
  * @returns {string}
  */
-function timeFormat (val, type) {
+function timeFormat(val, type) {
   val = Number(val)
   let date = new Date(val)
   let Y = date.getFullYear() + '-'

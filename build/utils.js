@@ -1,12 +1,9 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/17
- * Describe:
- * Log:
- *  ---- 2018/12/17 17:15 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 10:19:33
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:17:13
  */
-
 const path = require('path')
 
 exports.resolveDir = function (dir) {
