@@ -1,19 +1,23 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/14
- * Describe:
- * Log:
- *  ---- 2018/12/14 15:59 [lyuwei] 初次添加
- *  ---- 2018/12/24 13:49 [lyuwei] 添加矩形框绘制
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 11:18:43
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:06:25
  */
-
-import Observable, { unByKey } from 'ol/Observable'
-import { mergeOptions } from '../Utils'
-import { SeeLayer } from '../SeeLayer'
+import Observable, {
+  unByKey
+} from 'ol/Observable'
+import {
+  mergeOptions
+} from '../Utils'
+import {
+  SeeLayer
+} from '../SeeLayer'
 import DrawEvent from './DrawEvent'
 import DrawEventType from './DrawEventType'
-import OlDraw, { createBox } from 'ol/interaction/Draw'
+import OlDraw, {
+  createBox
+} from 'ol/interaction/Draw'
 import StyleJsonFunction from '../Style'
 import SeeMap from '../SeeMap'
 
@@ -23,7 +27,7 @@ const options = {
 }
 
 export default class Draw extends Observable {
-  constructor (sourceSeeLayer = null, setOptions = {}, styleJson = null) {
+  constructor(sourceSeeLayer = null, setOptions = {}, styleJson = null) {
     super()
     this.getOptions = mergeOptions(options, setOptions)
 
@@ -46,7 +50,7 @@ export default class Draw extends Observable {
    * @param seemap {SeeMap} 地图容器
    * @returns {Draw}
    */
-  setMap (seemap) {
+  setMap(seemap) {
     if (!(seemap instanceof SeeMap)) {
       throw new Error('容器非法！')
     }
@@ -59,7 +63,7 @@ export default class Draw extends Observable {
    * @param sourceSeeLayer 图层类
    * @return {Draw}
    */
-  setSourceSeeLayer (sourceSeeLayer) {
+  setSourceSeeLayer(sourceSeeLayer) {
     if (this._drawInteraction) {
       this.remove()
     }
@@ -76,7 +80,7 @@ export default class Draw extends Observable {
    * @param newOptions 新属性
    * @return {Draw}
    */
-  setOption (newOptions = {}) {
+  setOption(newOptions = {}) {
     this.getOptions = mergeOptions(this.getOptions, newOptions)
     return this
   }
@@ -86,7 +90,7 @@ export default class Draw extends Observable {
    * @param styleJson
    * @return {Draw}
    */
-  setStyle (styleJson) {
+  setStyle(styleJson) {
     if (styleJson instanceof Function) {
       throw new Error('该类设置的样式不支持function的方式！')
     }
@@ -98,7 +102,7 @@ export default class Draw extends Observable {
    * 激活根据当前类中的设置项，激活绘制功能
    * @return {boolean} 是否成功激活
    */
-  active () {
+  active() {
     if (!this._seemmoMap || !this._sourceSeeLayer) {
       this.dispatchEvent(
         new DrawEvent(DrawEventType.MESSAGE, null, null, '请先设置容器和对应的图层类！')
@@ -142,7 +146,7 @@ export default class Draw extends Observable {
    * 移除当前激活的绘制功能
    * @return {Draw}
    */
-  remove () {
+  remove() {
     if (this._drawInteraction) {
       unByKey(this._drawEndEventKey)
       this._drawEndEventKey = null
@@ -156,7 +160,7 @@ export default class Draw extends Observable {
   /**
    * 销毁对象
    */
-  destroy () {
+  destroy() {
     if (this._drawInteraction) {
       this.remove()
     }

@@ -1,10 +1,14 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/07
- * Describe:
- * Log:
- *  ---- 2018/12/07 10:18 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 11:18:43
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:06:42
  */
-export { default as SeeGate } from './SeeGate'
-export { default as SeeGateEventType } from './SeeGateEventType'
+export {
+  default as SeeGate
+}
+from './SeeGate'
+export {
+  default as SeeGateEventType
+}
+from './SeeGateEventType'

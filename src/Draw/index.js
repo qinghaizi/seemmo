@@ -1,11 +1,14 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/14
- * Describe:
- * Log:
- *  ---- 2018/12/14 17:41 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 11:18:43
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 11:18:43
  */
-
-export { default as Draw } from './Draw'
-export { default as DrawEventType } from './DrawEventType'
+export {
+  default as Draw
+}
+from './Draw'
+export {
+  default as DrawEventType
+}
+from './DrawEventType'

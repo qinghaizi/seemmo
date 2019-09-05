@@ -1,12 +1,9 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/12
- * Describe:
- * Log:
- *  ---- 2018/12/12 15:29 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 11:18:43
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:07:10
  */
-
 import Observable, {
   unByKey
 } from 'ol/Observable'
@@ -42,7 +39,7 @@ export default class SeeLayer extends Observable {
    * @param setOptions {Object} 设置的option，覆盖默认的配置
    * @param styleJson {Object | Array<Object> | Function } 图层的样式
    */
-  constructor (setOptions = {}, styleJson) {
+  constructor(setOptions = {}, styleJson) {
     super()
     this.getOptions = mergeOptions(options, setOptions)
     this._seemmoMap = null
@@ -73,7 +70,7 @@ export default class SeeLayer extends Observable {
    * @param seemap {SeeMap} 地图容器
    * @returns {SeeGate}
    */
-  addTo (seemap) {
+  addTo(seemap) {
     if (!(seemap instanceof SeeMap)) {
       throw new Error('容器非法！')
     }
@@ -88,7 +85,7 @@ export default class SeeLayer extends Observable {
    * @returns {SeeGate}
    * @private
    */
-  _initMapEvent () {
+  _initMapEvent() {
     if (!this._seemmoMap) {
       return
     }
@@ -108,7 +105,7 @@ export default class SeeLayer extends Observable {
    * @returns {Feature|null}
    * @private
    */
-  _getFeatureByPixel (pixel) {
+  _getFeatureByPixel(pixel) {
     let findFeature = null
     if (this._vectorLayer.getVisible() && this._seemmoMap) {
       findFeature = this._seemmoMap.forEachFeatureAtPixel(
@@ -128,7 +125,7 @@ export default class SeeLayer extends Observable {
    * @param evt olMap上的鼠标事件
    * @private
    */
-  _gatePointerMove (evt) {
+  _gatePointerMove(evt) {
     if (!this._vectorLayer.getVisible() && this._seemmoMap) {
       return
     }
@@ -150,7 +147,7 @@ export default class SeeLayer extends Observable {
    * @param evt olMap上的鼠标事件
    * @private
    */
-  _gateClickFunc (evt) {
+  _gateClickFunc(evt) {
     if (this._canClick && this._vectorLayer.getVisible() && this._seemmoMap) {
       let findGate = this._getFeatureByPixel(evt.pixel)
       if (findGate) {
@@ -180,7 +177,7 @@ export default class SeeLayer extends Observable {
    * @param boolean 是否可以点击，默认不可点击
    * @return {SeeGate}
    */
-  changeGateClickEnable (boolean = false) {
+  changeGateClickEnable(boolean = false) {
     this._canClick = boolean
     return this
   }
@@ -193,7 +190,7 @@ export default class SeeLayer extends Observable {
    * @param properties {Object|null} 设置属性
    * @return {null | geomertry}
    */
-  addFeature (type, id, coordinates, properties) {
+  addFeature(type, id, coordinates, properties) {
     if (!id) {
       throw new Error('请提供必要的要素ID，以便区分')
     }
@@ -243,7 +240,7 @@ export default class SeeLayer extends Observable {
    * @param id 设置的id
    * @return {*} 要素的feature对象
    */
-  getFeatureById (id) {
+  getFeatureById(id) {
     return this._vectorLayer.getSource().getFeatureById(id)
   }
 
@@ -252,7 +249,7 @@ export default class SeeLayer extends Observable {
    * @param ids
    * @return {SeeLayer}
    */
-  removeFeatures (ids = []) {
+  removeFeatures(ids = []) {
     ids.map(eachId => {
       let findFeature = this._vectorLayer.getSource().getFeatureById(eachId)
       if (findFeature) {
@@ -267,7 +264,7 @@ export default class SeeLayer extends Observable {
    * @param ids
    * @return {SeeLayer}
    */
-  keepFeatures (ids = []) {
+  keepFeatures(ids = []) {
     this._vectorLayer.getSource().forEachFeature(eachFeature => {
       if (ids.indexOf(eachFeature.getId()) === -1) {
         this._vectorLayer.getSource().removeFeature(eachFeature)
@@ -280,7 +277,7 @@ export default class SeeLayer extends Observable {
    * 移除所有要素
    * @return {SeeLayer}
    */
-  removeAll () {
+  removeAll() {
     this._vectorLayer.getSource().clear()
     return this
   }
@@ -290,7 +287,7 @@ export default class SeeLayer extends Observable {
    * @param styleJson {Object | Array | Function} 设置样式
    * @return {SeeGate}
    */
-  setStyle (styleJson) {
+  setStyle(styleJson) {
     if (styleJson instanceof Function) {
       this._vectorLayer.setStyle(feature => {
         let getStyleJson = styleJson(
@@ -303,7 +300,7 @@ export default class SeeLayer extends Observable {
       this._vectorLayer.setStyle(generateStyle(styleJson))
     }
 
-    function generateStyle (setJson) {
+    function generateStyle(setJson) {
       // 采用instanceof判断的时候，任何类型都是Object类型, 所以先判断数组
       if (setJson instanceof Array) {
         let styles = []
@@ -323,7 +320,7 @@ export default class SeeLayer extends Observable {
    * 获取当前类使用的图层
    * @return {VectorLayer}
    */
-  getLayer () {
+  getLayer() {
     return this._vectorLayer
   }
 
@@ -331,7 +328,7 @@ export default class SeeLayer extends Observable {
    * 显示对象
    * @returns {SeeGate}
    */
-  show () {
+  show() {
     this._vectorLayer.setVisible(true)
     return this
   }
@@ -340,7 +337,7 @@ export default class SeeLayer extends Observable {
    * 隐藏对象
    * @returns {SeeGate}
    */
-  hide () {
+  hide() {
     this._vectorLayer.setVisible(false)
     return this
   }
@@ -348,7 +345,7 @@ export default class SeeLayer extends Observable {
   /**
    * 销毁对象
    */
-  destroy () {
+  destroy() {
     if (!this._seemmoMap) {
       // 如果没有添加到地图上则，则直接删除
       return
@@ -368,7 +365,7 @@ export default class SeeLayer extends Observable {
    * @param lineId 需要格式化的最短路径线对象id
    * @return {SeeLayer}
    */
-  analysisOneLine (lineId) {
+  analysisOneLine(lineId) {
     let _this = this
     let findFeature = this.getFeatureById(lineId)
     if (
@@ -387,7 +384,7 @@ export default class SeeLayer extends Observable {
     this.shortAnalysis(coors, successCallBack, failureCallBack, errorCallBack)
     return this
 
-    function successCallBack (coorsData) {
+    function successCallBack(coorsData) {
       let findFeature = _this.getFeatureById(lineId)
       if (findFeature) {
         let analysisLine = new LineString(coorsData).transform(
@@ -398,11 +395,11 @@ export default class SeeLayer extends Observable {
       }
     }
 
-    function failureCallBack (a) {
+    function failureCallBack(a) {
       // 暂时没失败不做处理
     }
 
-    function errorCallBack (errorMessage) {
+    function errorCallBack(errorMessage) {
       _this.dispatchEvent(
         new SeeLayerEvent(
           SeeLayerEvetnType.ANALYSISERROR,
@@ -421,7 +418,7 @@ export default class SeeLayer extends Observable {
    * @param failure {Function} 失败之后的回调，参数是失败event
    * @param error {Function} 错误之后的回调，传参是错误信息
    */
-  shortAnalysis (coors = [], success, failure, error) {
+  shortAnalysis(coors = [], success, failure, error) {
     if (!this._seemmoMap) {
       error('请先将图层设置到容器中，以便获取相关请求地址！')
       return

@@ -1,17 +1,15 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/06
- * Describe:
- * Log:
- *  ---- 2018/12/06 21:47 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 11:18:43
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:05:12
  */
 import OLLayerGroup from 'ol/layer/Group'
 import OLLayerBase from 'ol/layer/Base'
 
 export default class LayerGroup extends OLLayerGroup {
   // eslint-disable-next-line
-  constructor (param) {
+  constructor(param) {
     super(param)
   }
 
@@ -20,7 +18,7 @@ export default class LayerGroup extends OLLayerGroup {
    * @param seemap 地图容器
    * @returns {LayerGroup}
    */
-  addTo (seemap) {
+  addTo(seemap) {
     seemap.addLayer(this)
     return this
   }
@@ -31,7 +29,7 @@ export default class LayerGroup extends OLLayerGroup {
    * @param value 需要查找的属性对应的值
    * @returns {Array} 查找得到的图层组中满足条件的所有图层
    */
-  getLayersBy (key, value) {
+  getLayersBy(key, value) {
     if (!key || !value) {
       return []
     }
@@ -50,7 +48,7 @@ export default class LayerGroup extends OLLayerGroup {
   /**
    * 移除当前数组中的所有图层
    */
-  removeAllLayers () {
+  removeAllLayers() {
     let allGroupLayers = this.getLayers()
 
     allGroupLayers.clear()
@@ -61,7 +59,7 @@ export default class LayerGroup extends OLLayerGroup {
    *
    * @param layer 需要添加的图层对象
    */
-  addLayer (layer) {
+  addLayer(layer) {
     let allGroupLayers = this.getLayers()
 
     if (layer instanceof OLLayerBase) {
@@ -88,7 +86,7 @@ export default class LayerGroup extends OLLayerGroup {
    * @returns {number} 插入的索引位置
    * @private
    */
-  _findInsertIndex (layer) {
+  _findInsertIndex(layer) {
     let index = -1
     let layerPorperties = layer.getProperties()
 
@@ -126,7 +124,7 @@ export default class LayerGroup extends OLLayerGroup {
    * @param layers 待排序的图层数组
    * @returns {Array} 排好序的图层
    */
-  static sortLayers (layers) {
+  static sortLayers(layers) {
     layers.sort(function (layerA, layerB) {
       let propertyA = layerA.getProperties()
       let propertyB = layerB.getProperties()
@@ -150,7 +148,7 @@ export default class LayerGroup extends OLLayerGroup {
    * 删除图层
    * @param layer 需要删除的图层对象
    * */
-  removeLayer (layer) {
+  removeLayer(layer) {
     let allGroupLayers = this.getLayers()
 
     if (layer instanceof OLLayerBase) {
@@ -162,7 +160,7 @@ export default class LayerGroup extends OLLayerGroup {
    * 删除图层组
    * @param { Array } layers 需要删除的图层数组对象
    * */
-  removeLayers (layers) {
+  removeLayers(layers) {
     let _this = this
 
     if (layers instanceof Array) {

@@ -1,12 +1,9 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/07
- * Describe:
- * Log:
- *  ---- 2018/12/07 11:38 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 11:18:43
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:07:01
  */
-
 const SeeGateEventType = {
   GATECLICK: 'gateClick',
   GATEMOVEON: 'gateMoveOn',

@@ -1,23 +1,18 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/07
- * Describe:
- * Log:
- *  ---- 2018/12/07 10:16 [lyuwei] 初次添加
- *  ---- 2018/12/10 9:48  [lyuwei] 添加样式解析
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 11:18:43
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 11:18:43
  */
-
-/**
- * each gate object
- * nodeName
- */
-
-import { mergeOptions } from '../Utils'
+import {
+  mergeOptions
+} from '../Utils'
 import SeeGateEvent from './SeeGateEvent'
 import SeeGateEventType from './SeeGateEventType'
 import SeeMap from '../SeeMap'
-import Observable, { unByKey } from 'ol/Observable'
+import Observable, {
+  unByKey
+} from 'ol/Observable'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import StyleJsonFunction from '../Style'
@@ -37,7 +32,7 @@ const options = {
 }
 
 export default class SeeGate extends Observable {
-  constructor (setOptions = {}, styleJson) {
+  constructor(setOptions = {}, styleJson) {
     super()
     this.getOptions = mergeOptions(options, setOptions)
     this._seemmoMap = null
@@ -71,7 +66,7 @@ export default class SeeGate extends Observable {
    * @param seemap {SeeMap} 地图容器
    * @returns {SeeGate}
    */
-  addTo (seemap) {
+  addTo(seemap) {
     if (!(seemap instanceof SeeMap)) {
       throw new Error('容器非法！')
     }
@@ -86,7 +81,7 @@ export default class SeeGate extends Observable {
    * @param styleJson {Object | Array | Function} 设置样式
    * @return {SeeGate}
    */
-  setStyle (styleJson) {
+  setStyle(styleJson) {
     if (styleJson instanceof Function) {
       this._gateLayer.setStyle((feature) => {
         let getStyleJson = styleJson(feature, this._seemmoMap.getView().getZoom())
@@ -98,7 +93,7 @@ export default class SeeGate extends Observable {
     // 使样式生效
     this._gateLayer.changed()
 
-    function generateStyle (setJson) {
+    function generateStyle(setJson) {
       if (setJson instanceof Object) {
         return StyleJsonFunction(setJson)
       } else if (setJson instanceof Array) {
@@ -118,7 +113,7 @@ export default class SeeGate extends Observable {
    * @param boolean 是否可以点击，默认不可点击
    * @return {SeeGate}
    */
-  changeGateClickEnable (boolean = false) {
+  changeGateClickEnable(boolean = false) {
     this._canClick = boolean
     // 每次改变状态都要更新要素的点击状态
     this.setSelectedGates()
@@ -130,7 +125,7 @@ export default class SeeGate extends Observable {
    * @returns {SeeGate}
    * @private
    */
-  _initMapEvent () {
+  _initMapEvent() {
     if (!this._seemmoMap) {
       return
     }
@@ -146,7 +141,7 @@ export default class SeeGate extends Observable {
    * @returns {Feature|null}
    * @private
    */
-  _getFeatureByPixel (pixel) {
+  _getFeatureByPixel(pixel) {
     let findFeature = null
     if (this._gateLayer.getVisible() && this._seemmoMap) {
       findFeature = this._seemmoMap.forEachFeatureAtPixel(pixel, (feaure, layer) => {
@@ -163,7 +158,7 @@ export default class SeeGate extends Observable {
    * @param evt olMap上的鼠标事件
    * @private
    */
-  _gateClickFunc (evt) {
+  _gateClickFunc(evt) {
     if (this._canClick) {
       let findGate = this._getFeatureByPixel(evt.pixel)
 
@@ -201,7 +196,7 @@ export default class SeeGate extends Observable {
    * @param evt olMap上的鼠标事件
    * @private
    */
-  _gatePointerMove (evt) {
+  _gatePointerMove(evt) {
     if (!this._gateLayer.getVisible()) {
       return
     }
@@ -226,7 +221,7 @@ export default class SeeGate extends Observable {
    * @param gateList gatelist
    * @returns {SeeGate} 返回当前对象
    */
-  createGateFeatures (gateList = []) {
+  createGateFeatures(gateList = []) {
     let features = []
     this._gateLayer.getSource().clear()
     this._allGateIds = []
@@ -247,7 +242,7 @@ export default class SeeGate extends Observable {
    * @param gateList
    * @return {SeeGate}
    */
-  addGateFeatures (gateList = []) {
+  addGateFeatures(gateList = []) {
     let features = []
     gateList.map((eachGate) => {
       let feature = this._createGateFeature(eachGate)
@@ -265,7 +260,7 @@ export default class SeeGate extends Observable {
    * @return {Feature | null} 如果不合法或者已存在则返回null，否则返回feature
    * @private
    */
-  _createGateFeature (gateObj = {}) {
+  _createGateFeature(gateObj = {}) {
     let latKey = this.getOptions.constKey.lat
     let lonKey = this.getOptions.constKey.lng
     let gateId = this.getOptions.constKey.id
@@ -287,7 +282,7 @@ export default class SeeGate extends Observable {
    * 获取所有选中的卡口id
    * @returns {Array}
    */
-  getSelectedGateIds () {
+  getSelectedGateIds() {
     return this._selectedGateIds
   }
 
@@ -296,9 +291,11 @@ export default class SeeGate extends Observable {
    * @param selecteds {Array} 选中卡口id数组
    * @returns {SeeGate}
    */
-  setSelectedGates (selecteds = []) {
+  setSelectedGates(selecteds = []) {
     let stringSelectedIds = []
-    selecteds.map((eachId) => { stringSelectedIds.push(eachId.toString()) })
+    selecteds.map((eachId) => {
+      stringSelectedIds.push(eachId.toString())
+    })
     this._gateLayer.getSource().getFeatures().map(
       (feature) => {
         let featureId = feature.get(this.getOptions.constKey.id).toString()
@@ -318,7 +315,7 @@ export default class SeeGate extends Observable {
    * @param geometry {ol/geom} 空间坐标对象
    * @returns {Array} 包含面的要素id
    */
-  calcGateInPolygon (geometry) {
+  calcGateInPolygon(geometry) {
     let inPolygonGates = []
     this._gateLayer.getSource().forEachFeature((feature) => {
       if (geometry.intersectsCoordinate(feature.getGeometry().getCoordinates())) {
@@ -332,7 +329,7 @@ export default class SeeGate extends Observable {
    * 显示对象
    * @returns {SeeGate}
    */
-  show () {
+  show() {
     this._gateLayer.setVisible(true)
     return this
   }
@@ -341,7 +338,7 @@ export default class SeeGate extends Observable {
    * 隐藏对象
    * @returns {SeeGate}
    */
-  hide () {
+  hide() {
     this._gateLayer.setVisible(false)
     return this
   }
@@ -349,7 +346,7 @@ export default class SeeGate extends Observable {
   /**
    * 销毁对象
    */
-  destroy () {
+  destroy() {
     if (!this._seemmoMap) {
       // 如果没有添加到地图上则，则直接删除
       return

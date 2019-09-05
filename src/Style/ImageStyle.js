@@ -1,23 +1,23 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/10
- * Describe:
- * Log:
- *  ---- 2018/12/10 11:02 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 11:18:43
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:05:49
  */
-
-import { imageStyleType, circleStyleConst } from './CONST'
+import {
+  imageStyleType,
+  circleStyleConst
+} from './CONST'
 import Icon from 'ol/style/Icon'
 import CircleStyle from 'ol/style/Circle'
 import FillStyleFunction from './FillStyle'
 import StrokeStyleFunction from './StrokeStyle'
 
-function iconStyleFunction (iconStyleJson) {
+function iconStyleFunction(iconStyleJson) {
   return new Icon(iconStyleJson)
 }
 
-function circleStyleFunction (circleStyleJson) {
+function circleStyleFunction(circleStyleJson) {
   let circleStyleObj = {}
   for (let key in circleStyleJson) {
     if (!circleStyleJson.hasOwnProperty(key)) {
@@ -37,7 +37,7 @@ function circleStyleFunction (circleStyleJson) {
   return new CircleStyle(circleStyleJson)
 }
 
-function imageStyleFunction (styleSet) {
+function imageStyleFunction(styleSet) {
   let imageStyle = null
   if (styleSet.hasOwnProperty('type') && styleSet.hasOwnProperty('value')) {
     switch (styleSet.type) {

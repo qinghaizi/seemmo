@@ -1,16 +1,13 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/12
- * Describe:
- * Log:
- *  ---- 2018/12/12 16:07 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 11:18:43
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:07:20
  */
-
 import olEventBase from 'ol/events/Event'
 
 export default class SeeLayerEvent extends olEventBase {
-  constructor (type, feature, coordinate, message) {
+  constructor(type, feature, coordinate, message) {
     super(type)
 
     this.feature = feature

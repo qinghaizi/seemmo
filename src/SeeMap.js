@@ -1,43 +1,23 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/06
- * Describe:
- * Log:
- *  ---- 2018/12/06 20:36 [lyuwei] 初次添加
- */
-
-import 'ol/ol.css'
-import {
-  mergeOptions
-} from './Utils'
-import OLMap from 'ol/Map'
-import OLView from 'ol/View'
-import {
-  defaults as OLControlDefaults
-} from 'ol/control'
-import {
-  defaults as OLInteractionDefaults
-} from 'ol/interaction'
-import {
-  transform
-} from 'ol/proj'
-import LayerGroup from './LayerGroup'
-import {
-  createPointTips,
-  createMouseTips
-} from './SeeTips'
-import TileLayer from 'ol/layer/Tile'
-import XYZ from 'ol/source/XYZ'
+import "ol/ol.css";
+import { mergeOptions } from "./Utils";
+import OLMap from "ol/Map";
+import OLView from "ol/View";
+import { defaults as OLControlDefaults } from "ol/control";
+import { defaults as OLInteractionDefaults } from "ol/interaction";
+import { transform } from "ol/proj";
+import LayerGroup from "./LayerGroup";
+import { createPointTips, createMouseTips } from "./SeeTips";
+import TileLayer from "ol/layer/Tile";
+import XYZ from "ol/source/XYZ";
 
 const options = {
   zoom: 10,
   zoomSlide: false,
-  center: [114.41719120, 30.46677258],
+  center: [114.4171912, 30.46677258],
   bounds: null,
   defaultControl: {},
-  defaultBaseLayer: 'white',
-}
+  defaultBaseLayer: "white"
+};
 
 /**
  * SeeMap 基本地图容器
@@ -49,98 +29,98 @@ export default class SeeMap extends OLMap {
    * @param mapServiceUrl {String} 地图基本服务地址，不用以 / 结尾，例 http://10.10.4.147:8088/map
    * @param optOptions 可选的基本设置参数
    */
-  constructor (mapdivOrId, mapServiceUrl, optOptions) {
+  constructor(mapdivOrId, mapServiceUrl, optOptions) {
     if (!mapServiceUrl || !/[a-zA-z0-9]+:?[0-9]/.exec(mapServiceUrl)) {
-      throw new Error('请填写正确的地图服务地址！')
+      throw new Error("请填写正确的地图服务地址！");
     }
-    let getOptions = mergeOptions(options, optOptions || {})
-    let setOptions = {}
+    let getOptions = mergeOptions(options, optOptions || {});
+    let setOptions = {};
 
-    setOptions.target = mapdivOrId
+    setOptions.target = mapdivOrId;
     setOptions.view = new OLView({
       zoom: getOptions.zoom,
-      center: transform(getOptions.center, 'EPSG:4326', 'EPSG:3857'),
+      center: transform(getOptions.center, "EPSG:4326", "EPSG:3857"),
       maxZoom: 18
-    })
+    });
     // 常规控制器，zoom，rotate，attribution
     setOptions.controls = OLControlDefaults({
       attribution: getOptions.defaultControl.attribution || false,
       zoom: getOptions.zoomSlide,
       zoomOptions: getOptions.defaultControl.zoomOptions || {
-        zoomInTipLabel: '放大',
-        zoomOutTipLabel: '缩小'
+        zoomInTipLabel: "放大",
+        zoomOutTipLabel: "缩小"
       }
-    })
+    });
     // 默认取消鼠标双击放大事件
     setOptions.interactions = OLInteractionDefaults({
       doubleClickZoom: false
-    })
+    });
 
-    super(setOptions)
-    let _this = this
-    _this._mapServiceUrl = mapServiceUrl
-    _this._mouseTips = null
+    super(setOptions);
+    let _this = this;
+    _this._mapServiceUrl = mapServiceUrl;
+    _this._mouseTips = null;
 
     _this._baseLayerGroup = new LayerGroup({
-      title: '底图图层',
+      title: "底图图层",
       layers: []
-    }).addTo(this)
+    }).addTo(this);
     _this._businessLayerGroup = new LayerGroup({
-      title: '业务图层',
+      title: "业务图层",
       layers: []
-    }).addTo(this)
+    }).addTo(this);
     _this._topLayerGroup = new LayerGroup({
-      title: '置顶图层',
+      title: "置顶图层",
       layers: []
-    }).addTo(this)
+    }).addTo(this);
 
     // _this.MKTFormat = new WKT()
     /** 结束初始化，开始初始化需要一键完成的工作 */
     // 1. 初始化底图
-    _this.setBaseLayer(getOptions.defaultBaseLayer)
+    _this.setBaseLayer(getOptions.defaultBaseLayer);
     // 2. 如果设置有底图范围，则初始化到指定的范围
     if (getOptions.bounds) {
-      _this.moveToExtent(getOptions.bounds)
+      _this.moveToExtent(getOptions.bounds);
     }
 
     // init event
-    this._initEvent()
+    this._initEvent();
   }
 
-  _initEvent () {
-    this.on('pointermove', this._mouseMoveHandler)
+  _initEvent() {
+    this.on("pointermove", this._mouseMoveHandler);
   }
 
   /**
    * 获取当前容器所设置的基础服务地址
    * @returns {String}
    */
-  getMapServiceUrl () {
-    return this._mapServiceUrl
+  getMapServiceUrl() {
+    return this._mapServiceUrl;
   }
 
   /**
    * 获取底图图层组
    * @return LayerGroup {SeemmoLayerGroup} 图层组
    * */
-  getBaseLayerGroup () {
-    return this._baseLayerGroup
+  getBaseLayerGroup() {
+    return this._baseLayerGroup;
   }
 
   /**
    * 获取业务图层组
    * @return LayerGroup {SeemmoLayerGroup} 图层组
    * */
-  getBusinessLayerGroup () {
-    return this._businessLayerGroup
+  getBusinessLayerGroup() {
+    return this._businessLayerGroup;
   }
 
   /**
    * 获取最顶层图层组
    * @return LayerGroup {SeemmoLayerGroup} 图层组
    * */
-  getTopLayerGroup () {
-    return this._topLayerGroup
+  getTopLayerGroup() {
+    return this._topLayerGroup;
   }
 
   /**
@@ -148,19 +128,26 @@ export default class SeeMap extends OLMap {
    * @param layerprefixOrUrl {String} 底图type或地图url
    * @return {SeeMap}
    */
-  setBaseLayer (layerprefixOrUrl) {
-    const baseLayerKey = 'SEEMMOBASELAYER'
-    let layerUrl = ''
+  setBaseLayer(layerprefixOrUrl) {
+    const baseLayerKey = "SEEMMOBASELAYER";
+    let layerUrl = "";
     // 如果参数直接为带有http的路径就直接使用，否则认为传入的是type字段，对接自有后台，需要对应类型的图层
-    if (layerprefixOrUrl.indexOf('http://') > -1) {
-      layerUrl = layerprefixOrUrl
+    if (layerprefixOrUrl.indexOf("http://") > -1) {
+      layerUrl = layerprefixOrUrl;
     } else {
-      layerUrl = this.getMapServiceUrl() + '/tiled/' + layerprefixOrUrl + '/{z}/{x}/{y}.png'
+      layerUrl =
+        this.getMapServiceUrl() +
+        "/tiled/" +
+        layerprefixOrUrl +
+        "/{z}/{x}/{y}.png";
     }
-    let baseLayers = this.getBaseLayerGroup().getLayersBy('baseLayerKey', baseLayerKey)
+    let baseLayers = this.getBaseLayerGroup().getLayersBy(
+      "baseLayerKey",
+      baseLayerKey
+    );
     if (baseLayers.length > 0) {
       // 存在layer则直接修改对应的url
-      baseLayers[0].getSource().setUrl(layerUrl)
+      baseLayers[0].getSource().setUrl(layerUrl);
     } else {
       // 不存在对应的图层，添加
       baseLayers = new TileLayer({
@@ -169,11 +156,11 @@ export default class SeeMap extends OLMap {
         }),
         layerType: 0,
         layerIndex: 0
-      })
-      baseLayers.set('baseLayerKey', baseLayerKey)
-      this.getBaseLayerGroup().addLayer(baseLayers)
+      });
+      baseLayers.set("baseLayerKey", baseLayerKey);
+      this.getBaseLayerGroup().addLayer(baseLayers);
     }
-    return this
+    return this;
   }
 
   /**
@@ -184,10 +171,15 @@ export default class SeeMap extends OLMap {
    * @param TargetEPSGCode  {String}   目标EPSG代码，默认为当前地图坐标系
    * @returns {module:ol/coordinate}
    */
-  corTransform (lon, lat, SourceEPSGCode = 'EPSG:4326', TargetEPSGCode = this.getView().getProjection()) {
-    let coordinate = [Number(lon), Number(lat)]
+  corTransform(
+    lon,
+    lat,
+    SourceEPSGCode = "EPSG:4326",
+    TargetEPSGCode = this.getView().getProjection()
+  ) {
+    let coordinate = [Number(lon), Number(lat)];
 
-    return transform(coordinate, SourceEPSGCode, TargetEPSGCode)
+    return transform(coordinate, SourceEPSGCode, TargetEPSGCode);
   }
 
   /**
@@ -195,24 +187,28 @@ export default class SeeMap extends OLMap {
    * @param willMoveExtent {Array} 需要移动至的EPSG:4326范围,[xmin，ymin，xmax，ymax]
    * @return {SeeMap}
    */
-  moveToExtent (willMoveExtent) {
+  moveToExtent(willMoveExtent) {
     if (!willMoveExtent || willMoveExtent.length !== 4) {
-      return this
+      return this;
     }
-    let newExtend = []
+    let newExtend = [];
 
-    newExtend = newExtend.concat(this.corTransform(willMoveExtent[0], willMoveExtent[1]))
-    newExtend = newExtend.concat(this.corTransform(willMoveExtent[2], willMoveExtent[3]))
-    let thisMapView = this.getView()
-    let viewBounds = newExtend
-    let resolution = thisMapView.getResolutionForExtent(viewBounds)
+    newExtend = newExtend.concat(
+      this.corTransform(willMoveExtent[0], willMoveExtent[1])
+    );
+    newExtend = newExtend.concat(
+      this.corTransform(willMoveExtent[2], willMoveExtent[3])
+    );
+    let thisMapView = this.getView();
+    let viewBounds = newExtend;
+    let resolution = thisMapView.getResolutionForExtent(viewBounds);
 
-    thisMapView.setResolution(resolution)
+    thisMapView.setResolution(resolution);
     thisMapView.fit(viewBounds, {
       constrainResolution: false,
       nearest: true
-    })
-    return this
+    });
+    return this;
   }
 
   /**
@@ -220,14 +216,28 @@ export default class SeeMap extends OLMap {
    * @param getProject {string} 想要获取的范围坐标系，默认 EPSG:4326
    * @return {Array} 返回的外接矩形
    */
-  getMapExtent (getProject = 'EPSG:4326') {
-    let currentExtent = this.getView().calculateExtent(this.getSize())
-    let viewProject = this.getView().getProjection()
-    let returnExtent = []
+  getMapExtent(getProject = "EPSG:4326") {
+    let currentExtent = this.getView().calculateExtent(this.getSize());
+    let viewProject = this.getView().getProjection();
+    let returnExtent = [];
 
-    returnExtent = returnExtent.concat(this.corTransform(currentExtent[0], currentExtent[1], viewProject, getProject))
-    returnExtent = returnExtent.concat(this.corTransform(currentExtent[2], currentExtent[3], viewProject, getProject))
-    return returnExtent
+    returnExtent = returnExtent.concat(
+      this.corTransform(
+        currentExtent[0],
+        currentExtent[1],
+        viewProject,
+        getProject
+      )
+    );
+    returnExtent = returnExtent.concat(
+      this.corTransform(
+        currentExtent[2],
+        currentExtent[3],
+        viewProject,
+        getProject
+      )
+    );
+    return returnExtent;
   }
 
   /**
@@ -236,8 +246,9 @@ export default class SeeMap extends OLMap {
    * @param options 相关移动的参数
    * @return {SeeMap}
    */
-  moveToCenter (centPoints, options = {}) {
-    let getOptions = mergeOptions({
+  moveToCenter(centPoints, options = {}) {
+    let getOptions = mergeOptions(
+      {
         maxZoom: null,
         minZoom: null,
         animate: false,
@@ -245,37 +256,37 @@ export default class SeeMap extends OLMap {
       },
 
       options
-    )
+    );
     if (centPoints instanceof Array && centPoints.length === 2) {
-      centPoints = this.corTransform(centPoints[0], centPoints[1])
+      centPoints = this.corTransform(centPoints[0], centPoints[1]);
     }
-    let currentZoom = this.getView().getZoom()
+    let currentZoom = this.getView().getZoom();
     if (getOptions.maxZoom && currentZoom > getOptions.maxZoom) {
-      currentZoom = getOptions.maxZoom
+      currentZoom = getOptions.maxZoom;
     }
     if (getOptions.minZoom && currentZoom < getOptions.minZoom) {
-      currentZoom = getOptions.minZoom
+      currentZoom = getOptions.minZoom;
     }
     if (getOptions.animate) {
       this.getView().animate({
         zoom: currentZoom,
         center: centPoints,
         duration: getOptions.animateDuration
-      })
+      });
     } else {
-      this.getView().setZoom(currentZoom)
-      this.getView().setCenter(centPoints)
+      this.getView().setZoom(currentZoom);
+      this.getView().setCenter(centPoints);
     }
 
-    return this
+    return this;
   }
 
-  fit (geometryOrExtent, options = {}) {
+  fit(geometryOrExtent, options = {}) {
     if (!options.maxZoom) {
-      options.maxZoom = 18
+      options.maxZoom = 18;
     }
-    this.getView().fit(geometryOrExtent, options)
-    return this
+    this.getView().fit(geometryOrExtent, options);
+    return this;
   }
 
   /**
@@ -283,22 +294,22 @@ export default class SeeMap extends OLMap {
    * @param coordinate {ol/coordinate~Coordinate|undefined}
    * @param innerHtml
    */
-  setPointTips (coordinate, innerHtml) {
+  setPointTips(coordinate, innerHtml) {
     if (!this.pointTips) {
-      createPointTips(this)
+      createPointTips(this);
     }
     if (innerHtml) {
-      this.pointTipsElement.innerHTML = innerHtml
+      this.pointTipsElement.innerHTML = innerHtml;
     }
-    this.pointTips.setPosition(coordinate)
+    this.pointTips.setPosition(coordinate);
   }
 
   /**
    * 设置鼠标右侧的提示
    * @param innerHtml
    */
-  setMouseTips (innerHtml) {
-    this._mouseTips = innerHtml
+  setMouseTips(innerHtml) {
+    this._mouseTips = innerHtml;
   }
 
   /**
@@ -306,18 +317,18 @@ export default class SeeMap extends OLMap {
    * @param evt
    * @private
    */
-  _mouseMoveHandler (evt) {
+  _mouseMoveHandler(evt) {
     if (evt.dragging) {
-      return
+      return;
     }
     if (!this.mouseTips) {
-      createMouseTips(this)
+      createMouseTips(this);
     }
     if (this._mouseTips) {
-      this.mouseTipsElement.innerHTML = this._mouseTips
-      this.mouseTips.setPosition(evt.coordinate)
+      this.mouseTipsElement.innerHTML = this._mouseTips;
+      this.mouseTips.setPosition(evt.coordinate);
     } else {
-      this.mouseTips.setPosition(null)
+      this.mouseTips.setPosition(null);
     }
   }
 }
