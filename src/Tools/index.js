@@ -1,12 +1,9 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/20
- * Describe: 添加各类帮助工具，坐标转换等
- * Log:
- *  ---- 2018/12/20 21:28 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 13:18:32
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:20:02
  */
-
 import GeoJSON from 'ol/format/GeoJSON'
 import * as CoordTrans from './CoordTrans'
 
@@ -17,7 +14,7 @@ const GeoJsonFromat = new GeoJSON()
  * @param geometry 空间属性
  * @return {geomObj} 格式化的空间对象,type 为对象类型，geom 为空间对象的坐标数组
  */
-export function readGeometry (geometry) {
+export function readGeometry(geometry) {
   let clonReadGeometry = geometry.clone()
   let geomObj = {}
   geomObj.type = clonReadGeometry.getType().toString()
@@ -33,9 +30,11 @@ export function readGeometry (geometry) {
  * @param geometry 绘制结束的空间对象
  * @return {string} 返回的geojson对象
  */
-export function readGeomAsGeoJson (geometry) {
+export function readGeomAsGeoJson(geometry) {
   let clonReadGeometry = geometry.clone()
   return GeoJsonFromat.writeGeometry(clonReadGeometry.transform('EPSG:3857', 'EPSG:4326'))
 }
 
-export { CoordTrans }
+export {
+  CoordTrans
+}

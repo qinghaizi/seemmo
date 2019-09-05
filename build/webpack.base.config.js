@@ -1,12 +1,9 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/17
- * Describe:
- * Log:
- *  ---- 2018/12/17 17:06 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 10:19:33
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 10:19:33
  */
-
 const path = require('path')
 const utils = require('./utils')
 
@@ -22,8 +19,7 @@ module.exports = {
     modules: ['node_modules']
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.(png|jpe?g|gif|webp)(\?.*)?$/,
         use: [{
           loader: 'url-loader',

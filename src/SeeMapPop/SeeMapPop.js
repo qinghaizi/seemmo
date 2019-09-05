@@ -1,14 +1,13 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/17
- * Describe:
- * Log:
- *  ---- 2018/12/17 11:31 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 13:18:32
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:20:09
  */
-
 import Observable from 'ol/Observable'
-import { mergeOptions } from '../Utils'
+import {
+  mergeOptions
+} from '../Utils'
 import Overlay from 'ol/Overlay'
 import Vue from 'vue'
 import SeeMap from '../SeeMap'
@@ -21,7 +20,7 @@ const options = {
 }
 
 export default class SeeMapPop extends Observable {
-  constructor (setOptions = {}, vueClass) {
+  constructor(setOptions = {}, vueClass) {
     super()
 
     this.getOptions = mergeOptions(options, setOptions)
@@ -48,7 +47,7 @@ export default class SeeMapPop extends Observable {
    * @param seemap {SeeMap} 地图容器
    * @returns {SeeGate}
    */
-  addTo (seemap) {
+  addTo(seemap) {
     if (this._seemmoMap && this._visible) {
       this._seemmoMap.removeOverlay(this._Overlay)
     }
@@ -62,13 +61,13 @@ export default class SeeMapPop extends Observable {
     return this
   }
 
-  setVueClass (vueClass) {
+  setVueClass(vueClass) {
     this._vueClass = vueClass
     this._vueVm = Vue.extend(this._vueClass)
     return this
   }
 
-  createVuePop (params) {
+  createVuePop(params) {
     if (this._lastVue) {
       this._lastVue.$destroy()
       this._lastVue = null
@@ -82,13 +81,13 @@ export default class SeeMapPop extends Observable {
     return this
   }
 
-  setOptions (options) {
+  setOptions(options) {
     this.getOptions = mergeOptions(this.getOptions, options)
     this._Overlay.setOffset(this.getOptions.offset)
     this._Overlay.setPositioning(this.getOptions.positioning)
   }
 
-  setPopPosition (coordinates) {
+  setPopPosition(coordinates) {
     if (this._Overlay && this._seemmoMap) {
       if (coordinates instanceof Array) {
         let x = Number(coordinates[0])
@@ -105,7 +104,7 @@ export default class SeeMapPop extends Observable {
     return this
   }
 
-  setVisible (visible = false) {
+  setVisible(visible = false) {
     this._visible = visible
     if (this._visible && this._seemmoMap) {
       this._seemmoMap.addOverlay(this._Overlay)
@@ -115,11 +114,11 @@ export default class SeeMapPop extends Observable {
     return this
   }
 
-  getVisible () {
+  getVisible() {
     return this._visible
   }
 
-  destroy () {
+  destroy() {
     if (this._lastVue) {
       this._lastVue.$destroy()
     }

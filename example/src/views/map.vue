@@ -1,11 +1,10 @@
-/**
-* Created by lyuwei
-* User: lvwei@seemmo.com
-* Date: 2018/12/10
-* Describe:
-* Log:
-*  ---- 2018/12/10 17:28 [lyuwei] 初次添加
-*/
+<!--
+ * @Descripttion: 
+ * @Date: 2019-09-05 10:19:34
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:19:35
+ -->
+
 <template>
   <el-container>
     <el-main>
@@ -31,7 +30,7 @@ export default {
   components: {
     MapBase
   },
-  data () {
+  data() {
     return {
       BASE_URL: process.env.BASE_URL,
       defaultProps: {
@@ -184,7 +183,7 @@ export default {
       this.$refs.map.thismap.on('pointermove', this.pointerMoveHandler)
       this.$refs.map.thismap.on('singleclick', this.addGateFeatures)
     },
-    pointerMoveHandler (evt) {
+    pointerMoveHandler(evt) {
       if (evt.dragging) {
         return
       }
@@ -194,7 +193,7 @@ export default {
       }
       this.$refs.map.thismap.setMouseTips(innerHtml)
     },
-    addGateFeatures (evt) {
+    addGateFeatures(evt) {
       const position = toLonLat(evt.coordinate)
       const [lng, lat] = position
       const nodeId = new Date().getTime()
@@ -211,7 +210,7 @@ export default {
       }]
       this.seeGate.addGateFeatures(gate)
     },
-    styleJsonFunction (feature, mapZoom) {
+    styleJsonFunction(feature, mapZoom) {
       let json = {
         image: {
           type: 'icon',
@@ -227,8 +226,8 @@ export default {
       return json
     }
   },
-  mounted () { },
-  destroyed () {
+  mounted() { },
+  destroyed() {
     this.seeGate.destroy()
   }
 }

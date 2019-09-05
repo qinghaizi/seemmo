@@ -1,10 +1,8 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/10
- * Describe:
- * Log:
- *  ---- 2018/12/10 15:53 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 13:18:32
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:19:56
  */
 import Stroke from 'ol/style/Stroke'
 

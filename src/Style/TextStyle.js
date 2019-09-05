@@ -1,13 +1,12 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/10
- * Describe:
- * Log:
- *  ---- 2018/12/10 16:01 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 13:18:32
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:18:32
  */
-
-import { textStyleConst } from './CONST'
+import {
+  textStyleConst
+} from './CONST'
 import FillStyleFunction from './FillStyle'
 import StrokeStyleFunction from './StrokeStyle'
 import Text from 'ol/style/Text'

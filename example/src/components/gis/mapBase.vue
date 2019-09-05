@@ -1,11 +1,10 @@
-/**
-* Created by lyuwei
-* User: lvwei@seemmo.com
-* Date: 2018/09/12
-* Describe:
-* Log:
-*  ---- 2018/09/12 09:55 [lyuwei] 初次添加
-*/
+<!--
+ * @Descripttion: 
+ * @Date: 2019-09-05 10:19:34
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:19:01
+ -->
+
 <template>
   <div :id="mapdivname"></div>
 </template>

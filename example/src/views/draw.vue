@@ -1,11 +1,10 @@
-/**
-* Created by lyuwei
-* User: lvwei@seemmo.com
-* Date: 2018/12/13
-* Describe:
-* Log:
-*  ---- 2018/12/13 10:34 [lyuwei] 初次添加
-*/
+<!--
+ * @Descripttion: 
+ * @Date: 2019-09-05 10:19:34
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:19:27
+ -->
+
 <template>
   <el-container>
     <el-col :span="20">
@@ -44,16 +43,16 @@
 </template>
 
 <script>
-  import MapBase from '../components/gis/mapBase'
-  import SeeGate from '#/SeeGate/SeeGate'
-  import SeeLayer from '#/SeeLayer/SeeLayer'
-  import Draw from '#/Draw/Draw'
-  import DrawEventType from '#/Draw/DrawEventType'
+import MapBase from '../components/gis/mapBase'
+import SeeGate from '#/SeeGate/SeeGate'
+import SeeLayer from '#/SeeLayer/SeeLayer'
+import Draw from '#/Draw/Draw'
+import DrawEventType from '#/Draw/DrawEventType'
 
 export default {
   name: 'feature',
   components: { MapBase },
-  data () {
+  data() {
     return {
       BASE_URL: process.env.BASE_URL,
       gateDatas: [
@@ -149,13 +148,13 @@ export default {
     }
   },
   computed: {
-    isCanDrawFree () {
+    isCanDrawFree() {
       return this.drawType !== 'LineString' && this.drawType !== 'Polygon'
     }
   },
 
   methods: {
-    mapInited () {
+    mapInited() {
       // 设置一个卡口对象，用来和后面的绘制
       this.seeGate = new SeeGate()
         .addTo(this.$refs.map.thismap)
@@ -177,7 +176,7 @@ export default {
       this.draw.on(DrawEventType.DRAWEND, this.drawEnd)
     },
 
-    styleJsonFunction (feature, mapZoom) {
+    styleJsonFunction(feature, mapZoom) {
       let json = {
         image: {
           type: 'icon',
@@ -193,7 +192,7 @@ export default {
       return json
     },
 
-    clickDraw () {
+    clickDraw() {
       if (!this.drawType) {
         this.$message.error('请选择需要绘制的对象类型！')
         return
@@ -211,7 +210,7 @@ export default {
     },
 
     // 激活绘制
-    activeDraw () {
+    activeDraw() {
       if (this.draw.active()) {
         this.isDrawing = true
       } else {
@@ -219,12 +218,12 @@ export default {
       }
     },
     // 手动销毁
-    removeDraw () {
+    removeDraw() {
       this.draw.remove()
       this.isDrawing = false
     },
 
-    drawEnd (evt) {
+    drawEnd(evt) {
       // 正常结束，取消绘制状态
       this.isDrawing = false
       let saveObj = {
@@ -234,11 +233,11 @@ export default {
       this.showResult.push(saveObj)
     },
 
-    selectResultChange () {
+    selectResultChange() {
       this.seeGate.setSelectedGates(this.selectResult.selectedIds)
     },
 
-    deleteDrawFeature () {
+    deleteDrawFeature() {
       if (this.selectResult) {
         this.seelayer.removeFeatures([this.selectResult.id])
         this.showResult = this.showResult.filter((v) => {
@@ -250,7 +249,7 @@ export default {
     }
   },
 
-  destroyed () {
+  destroyed() {
     if (this.draw) {
       // 销毁该页面就移出当前监听的事件，防止部分错误
       this.draw.un(DrawEventType.DRAWEND, this.drawEnd)

@@ -1,11 +1,10 @@
-/**
-* Created by lyuwei
-* User: lvwei@seemmo.com
-* Date: 2018/12/10
-* Describe:
-* Log:
-*  ---- 2018/12/10 17:28 [lyuwei] 初次添加
-*/
+<!--
+ * @Descripttion: 
+ * @Date: 2019-09-05 10:19:34
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 10:19:34
+ -->
+
 <template>
   <el-container>
     <el-main>
@@ -29,7 +28,7 @@ export default {
   components: {
     MapBase
   },
-  data () {
+  data() {
     return {
       BASE_URL: process.env.BASE_URL,
       defaultProps: {
@@ -179,11 +178,11 @@ export default {
     mapInited: function () {
       this.seeLayer = new SeeLayer().addTo(this.$refs.map.thismap)
     },
-    addPoint () {
+    addPoint() {
       this.seeLayer.addFeature('point', 100, [114.39277724975, 30.595631349259])
       this.seeLayer.setStyle(this.styleJsonFunction)
     },
-    addLine () {
+    addLine() {
       this.seeLayer.addFeature('line', 102, [[114.39277724975, 30.595631349259], [112.39277724975, 35.595631349259]])
       this.seeLayer.setStyle({
         stroke: {
@@ -192,13 +191,13 @@ export default {
         }
       })
     },
-    addPolylon () {
+    addPolylon() {
       this.seeLayer.addFeature('polygon', 103, [[114.19277724975, 30.695631349259], [114.09277724975, 30.095631349259], [114.99277724975, 30.795631349259], [114.39277724975, 30.595631349259]])
       this.seeLayer.setStyle({
         fillColor: 'rgba(0, 0, 0, 0.6)',
       })
     },
-    styleJsonFunction (feature, mapZoom) {
+    styleJsonFunction(feature, mapZoom) {
       let scale = mapZoom > 10 ? 1 : 0.8
       let json = {
         image: {
@@ -215,8 +214,8 @@ export default {
       return json
     }
   },
-  mounted () { },
-  destroyed () {
+  mounted() { },
+  destroyed() {
     this.seeGate.destroy()
   }
 }

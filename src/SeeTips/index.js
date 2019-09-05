@@ -1,16 +1,13 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/06
- * Describe:
- * Log:
- *  ---- 2018/12/06 21:57 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 13:18:32
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:18:32
  */
-
 import OLOverlay from 'ol/Overlay'
 import './seeTips.less'
 
-export function createPointTips (olmap) {
+export function createPointTips(olmap) {
   if (!olmap) {
     throw new Error('创建tips需要对应的map容器')
   }
@@ -29,7 +26,7 @@ export function createPointTips (olmap) {
   olmap.addOverlay(olmap.pointTips)
 }
 
-export function createMouseTips (olmap) {
+export function createMouseTips(olmap) {
   if (!olmap) {
     throw new Error('创建tips需要对应的map容器')
   }

@@ -1,11 +1,10 @@
-/**
-* Created by lyuwei
-* User: lvwei@seemmo.com
-* Date: 2018/12/10
-* Describe:
-* Log:
-*  ---- 2018/12/10 17:28 [lyuwei] 初次添加
-*/
+<!--
+ * @Descripttion: 
+ * @Date: 2019-09-05 10:19:34
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 10:19:34
+ -->
+
 <template>
   <el-container>
     <el-main>

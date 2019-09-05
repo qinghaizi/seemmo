@@ -1,10 +1,8 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/11/02
- * Describe:
- * Log:
- *  ---- 2018/11/02 11:53 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 13:18:32
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:18:32
  */
 // let serverUrl = 'http://' + window.location.host + '/geoserver/gwc/service/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&LAYER=seemmo:simplified_land_polygons&STYLE=&TILEMATRIX=EPSG:900913:{z}&TILEMATRIXSET=EPSG:900913&FORMAT=application/x-protobuf;type=mapbox-vector&TILECOL={x}&TILEROW={y}';
 let serverUrl = 'http://' + window.location.host + '/geoserver/gwc/service/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&LAYER=seemmo&STYLE=&TILEMATRIX=EPSG:900913:{z}&TILEMATRIXSET=EPSG:900913&FORMAT=application/x-protobuf;type=mapbox-vector&TILECOL={x}&TILEROW={y}'
@@ -32,8 +30,7 @@ export default {
   },
   'sprite': 'mapbox://sprites/mapbox/streets-v10',
   'glyphs': 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
-  'layers': [
-    {
+  'layers': [{
       'id': 'background',
       'type': 'background',
       'layout': {},

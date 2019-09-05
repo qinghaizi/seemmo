@@ -1,12 +1,9 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/18
- * Describe:
- * Log:
- *  ---- 2018/12/18 10:04 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 10:19:33
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 10:19:33
  */
-
 const utils = require('./utils')
 const merge = require('webpack-merge')
 const webpackBaseConfig = require('./webpack.base.config')
@@ -41,8 +38,7 @@ module.exports = merge(webpackBaseConfig, {
   // prod 的文件中是不包含vue文件的
   module: {
     noParse: /^(ol|vue)/,
-    rules: [
-      {
+    rules: [{
         test: /\.less$/,
         use: [
           MiniCssExtractPlugin.loader,

@@ -1,11 +1,10 @@
-/**
-* Created by lyuwei
-* User: lvwei@seemmo.com
-* Date: 2018/12/13
-* Describe:
-* Log:
-*  ---- 2018/12/13 10:34 [lyuwei] 初次添加
-*/
+<!--
+ * @Descripttion: 
+ * @Date: 2019-09-05 10:19:34
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 10:19:34
+ -->
+
 <template>
   <el-container>
     <el-col :span="20">
@@ -78,7 +77,7 @@ export default {
   components: {
     MapBase
   },
-  data () {
+  data() {
     return {
       BASE_URL: process.env.BASE_URL,
       gateDatas: [
@@ -171,14 +170,14 @@ export default {
   computed: {
   },
   methods: {
-    mapInited () {
+    mapInited() {
       this.seeGate = new SeeGate()
         .addTo(this.$refs.map.thismap)
         .setStyle(this.styleJsonFunction)
         .createGateFeatures(this.gateDatas)
         .on(SeeGateEventType.GATEMOVEON, this.setView)
     },
-    styleJsonFunction (feature, mapZoom) {
+    styleJsonFunction(feature, mapZoom) {
       let json = {
         image: {
           type: 'icon',
@@ -193,7 +192,7 @@ export default {
       }
       return json
     },
-    showPopView ({ positioning = this.positioning, offset = [0, 0] } = {}) {
+    showPopView({ positioning = this.positioning, offset = [0, 0] } = {}) {
       this.positioning = positioning
       this.offsetX = offset[0]
       this.offsetY = offset[1]
@@ -204,7 +203,7 @@ export default {
       }
       this.level = 1
     },
-    setView (evt) {
+    setView(evt) {
       if (!this.seePop) {
         return
       }
@@ -217,18 +216,18 @@ export default {
           }
         }
         this.seePop.createVuePop(params)
-                    .setPopPosition([gateInfo.lng, gateInfo.lat])
-                    .setVisible(true)
+          .setPopPosition([gateInfo.lng, gateInfo.lat])
+          .setVisible(true)
       } else {
         this.seePop.setVisible(false)
       }
     },
-    setOffest () {
+    setOffest() {
       this.showPopView({ offset: [this.offsetX, this.offsetY] })
     },
 
   },
-  destroyed () {
+  destroyed() {
   }
 }
 </script>

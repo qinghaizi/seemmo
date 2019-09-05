@@ -1,13 +1,12 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/12/10
- * Describe: 根据传入的json文件得到对应的style样式
- * Log:
- *  ---- 2018/12/10 10:15 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 13:18:32
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:18:32
  */
-
-import { styleType } from './CONST'
+import {
+  styleType
+} from './CONST'
 import imageStyleFunction from './ImageStyle'
 import Style from 'ol/style/Style'
 import FillStyleFunction from './FillStyle'

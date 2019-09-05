@@ -1,22 +1,20 @@
-/**
- * Created by lyuwei
- * User: lvwei@seemmo.com
- * Date: 2018/09/12
- * Describe:
- * Log:
- *  ---- 2018/09/12 09:48 [lyuwei] 初次添加
+/*
+ * @Descripttion: 
+ * @Date: 2019-09-05 13:18:32
+ * @LastEditors: tande
+ * @LastEditTime: 2019-09-05 13:19:18
  */
+import {
+  SeeMap
+} from '#/index'
 
-import { SeeMap } from '#/index'
-
-export function initMap (div) {
+export function initMap(div) {
   let _map = new SeeMap(
-      div,
-      'http://localhost:8000',
-      {
-        defaultBaseLayer: 'http://10.10.4.92/map/tiledmap/black/{z}/{x}/{y}.png'
-      }
-    )
+    div,
+    'http://localhost:8000', {
+      defaultBaseLayer: 'http://10.10.4.92/map/tiledmap/black/{z}/{x}/{y}.png'
+    }
+  )
   // todo debuguser
   // let debugLayer = new TileLayer({
   //   source: new TileDebug({
