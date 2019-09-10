@@ -1,18 +1,20 @@
 /*
- * @Descripttion: 
+ * @Descripttion:
  * @Date: 2019-09-05 11:18:43
- * @LastEditors: tande
- * @LastEditTime: 2019-09-05 11:18:43
+ * @LastEditors: tande1124@163.com
+ * @LastEditTime: 2019-09-10 20:22:01
  */
 
-export let create = Object.create || (function () {
-  function F() {}
+export let create =
+  Object.create ||
+  (function() {
+    function F() {}
 
-  return function (proto) {
-    F.prototype = proto
-    return new F()
-  }
-})()
+    return function(proto) {
+      F.prototype = proto
+      return new F()
+    }
+  })()
 
 /**
  * 简易的融合option对象，不会深度融合只有一层

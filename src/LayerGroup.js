@@ -1,8 +1,8 @@
 /*
- * @Descripttion: 
+ * @Descripttion:
  * @Date: 2019-09-05 11:18:43
  * @LastEditors: tande
- * @LastEditTime: 2019-09-05 13:05:12
+ * @LastEditTime: 2019-09-08 13:47:49
  */
 import OLLayerGroup from 'ol/layer/Group'
 import OLLayerBase from 'ol/layer/Base'
@@ -36,7 +36,7 @@ export default class LayerGroup extends OLLayerGroup {
     let allGroupLayers = this.getLayers()
     let findLayers = []
 
-    allGroupLayers.forEach((eachItem) => {
+    allGroupLayers.forEach(eachItem => {
       if (eachItem.get(key) === value) {
         findLayers.push(eachItem)
       }
@@ -56,7 +56,6 @@ export default class LayerGroup extends OLLayerGroup {
 
   /**
    * @function 添加图层
-   *
    * @param layer 需要添加的图层对象
    */
   addLayer(layer) {
@@ -68,13 +67,13 @@ export default class LayerGroup extends OLLayerGroup {
         LayerGroup.sortLayers(allGroupLayers.getArray())
       }
 
-      // let index = this._findInsertIndex(layer)
-      // // insertAt
-      // if (index !== -1) {
-      //   allGroupLayers.insertAt(index, layer)
-      // } else {
-      //   allGroupLayers.push(layer)
-      // }
+      let index = this._findInsertIndex(layer)
+      // insertAt
+      if (index !== -1) {
+        allGroupLayers.insertAt(index, layer)
+      } else {
+        allGroupLayers.push(layer)
+      }
     } else {
       throw new Error('非法的图层类型')
     }
@@ -90,15 +89,24 @@ export default class LayerGroup extends OLLayerGroup {
     let index = -1
     let layerPorperties = layer.getProperties()
 
-    if (layerPorperties.hasOwnProperty('layerIndex') && layerPorperties.hasOwnProperty('layerType')) {
+    if (
+      layerPorperties.hasOwnProperty('layerIndex') &&
+      layerPorperties.hasOwnProperty('layerType')
+    ) {
       let allGroupLayers = this.getLayers()
 
       for (let i = 0; i < allGroupLayers.getLength(); i++) {
         let property = allGroupLayers.item(i).getProperties()
 
-        if (property.hasOwnProperty('layerIndex') && property.hasOwnProperty('layerType')) {
-          let typeBoolean = Number(layerPorperties['layerType']) - Number(property['layerType'])
-          let indexBoolea = Number(layerPorperties['layerIndex']) - Number(property['layerIndex'])
+        if (
+          property.hasOwnProperty('layerIndex') &&
+          property.hasOwnProperty('layerType')
+        ) {
+          let typeBoolean =
+            Number(layerPorperties['layerType']) - Number(property['layerType'])
+          let indexBoolea =
+            Number(layerPorperties['layerIndex']) -
+            Number(property['layerIndex'])
 
           if (typeBoolean > 0) {
             index = i + 1
@@ -125,11 +133,12 @@ export default class LayerGroup extends OLLayerGroup {
    * @returns {Array} 排好序的图层
    */
   static sortLayers(layers) {
-    layers.sort(function (layerA, layerB) {
+    layers.sort(function(layerA, layerB) {
       let propertyA = layerA.getProperties()
       let propertyB = layerB.getProperties()
 
-      if (!propertyA.hasOwnProperty('layerIndex') ||
+      if (
+        !propertyA.hasOwnProperty('layerIndex') ||
         !propertyA.hasOwnProperty('layerType') ||
         !propertyB.hasOwnProperty('layerIndex') ||
         !propertyB.hasOwnProperty('layerType')
