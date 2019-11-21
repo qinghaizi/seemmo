@@ -2,18 +2,17 @@
  * @LastEditors: tande
  * @Author: lyuwei
  * @Date: 2019-03-07 14:14:31
- * @LastEditTime: 2019-11-20 16:29:35
+ * @LastEditTime: 2019-11-21 14:32:12
  */
 
 import LayerGroup from "./Layers/LayerGroup";
 import BaseLayer from "./Layers/BaseLayer";
 import * as mapboxgl from "mapbox-gl";
-// import mapboxgl from 'mapbox-gl/dist/mapbox-gl-dev'
-import "mapbox-gl/dist/mapbox-gl.css";
 import SeeVectorBaseLayer from "./Layers/VectorBaseLayer";
 import XYZBaseLayer from "./Layers/XYZBaseLayer";
 import { assign } from "./Core/obj";
 import Tips from "./SeeMapPop/Tips";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 interface SeemapOptions {
   /** 地图基本服务地址，不用以 / 结尾，例 http://10.10.4.147:8088/map */
@@ -55,8 +54,8 @@ let defaultOption: SeemapOptions = {
   pitch: 0,
   bearing: 0,
   baseLayer: {
-    type: "vector",
-    layerTypeOrUrl: "baseLayer_white"
+    type: "xyz",
+    layerTypeOrUrl: "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"
   }
 };
 
@@ -88,6 +87,7 @@ export default class SeeMap extends mapboxgl.Map {
   /** 弹出框资源 */
   private readonly pointTips: mapboxgl.Popup;
   private readonly mouseTips: Tips;
+
   /**
    * SeeMap 基本地图容器
    * @param mapdivOrId 存放地图容器的div或其Id
@@ -132,7 +132,7 @@ export default class SeeMap extends mapboxgl.Map {
 
     this._mapOptions = mapboxOptions;
 
-    // 底图默认vector，地图样式为baseLayer_white
+    // 底图默认xyz
     this._baselayerType = getOptions.baseLayer.type;
     this._layerTypeOrUrl = getOptions.baseLayer.layerTypeOrUrl;
     this._mapServiceUrl = getOptions.serviceUrl;
@@ -140,6 +140,7 @@ export default class SeeMap extends mapboxgl.Map {
 
     this._seemapLayerGroups = [];
 
+    // 创建不同的图层
     this._baseLayerGroup = new LayerGroup({
       title: "底图图层",
       groupIndex: 0
@@ -187,6 +188,7 @@ export default class SeeMap extends mapboxgl.Map {
 
   /** 加载XYZBaseLayer */
   public addXYZBaseLayer(): void {
+    debugger;
     this._xyzBaseLayer = new XYZBaseLayer(
       `${this.getMapServiceUrl()}`,
       `${this.getLayerTypeOrUrl()}`
