@@ -1,9 +1,3 @@
-/*
- * @LastEditors: tande
- * @Author: lyuwei
- * @Date: 2019-03-19 12:57:03
- * @LastEditTime: 2019-11-20 15:42:53
- */
 import Observable from "../Core/Observable";
 import SeeMap from "../SeeMap";
 import { AnySourceData, MapLayerEventType, EventData, Layer } from "mapbox-gl";
