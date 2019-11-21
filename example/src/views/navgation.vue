@@ -2,7 +2,7 @@
  * @Descripttion:
  * @Date: 2019-11-20 10:33:20
  * @LastEditors: tande
- * @LastEditTime: 2019-11-21 09:41:17
+ * @LastEditTime: 2019-11-21 14:42:31
  -->
 <template>
 	<el-container>
@@ -40,7 +40,7 @@
 					<el-button>图标</el-button>
 				</router-link>
 				<router-link to="/short">
-					<el-button>最短路径分析</el-button>
+					<el-button>多点成线</el-button>
 				</router-link>
 			</el-row>
 		</el-main>
