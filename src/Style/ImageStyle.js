@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion:
  * @Date: 2019-09-05 11:18:43
  * @LastEditors: tande1124@163.com
  * @LastEditTime: 2019-09-10 20:22:11
@@ -10,11 +10,11 @@ import CircleStyle from 'ol/style/Circle'
 import FillStyleFunction from './FillStyle'
 import StrokeStyleFunction from './StrokeStyle'
 
-function iconStyleFunction(iconStyleJson) {
+function iconStyleFunction (iconStyleJson) {
     return new Icon(iconStyleJson)
 }
 
-function circleStyleFunction(circleStyleJson) {
+function circleStyleFunction (circleStyleJson) {
     let circleStyleObj = {}
     for (let key in circleStyleJson) {
         if (!circleStyleJson.hasOwnProperty(key)) {
@@ -34,7 +34,7 @@ function circleStyleFunction(circleStyleJson) {
     return new CircleStyle(circleStyleJson)
 }
 
-function imageStyleFunction(styleSet) {
+function imageStyleFunction (styleSet) {
     let imageStyle = null
     if (styleSet.hasOwnProperty('type') && styleSet.hasOwnProperty('value')) {
         switch (styleSet.type) {

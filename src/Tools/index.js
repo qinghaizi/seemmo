@@ -1,5 +1,5 @@
 /*
- * @Descripttion: 
+ * @Descripttion:
  * @Date: 2019-09-05 13:18:32
  * @LastEditors: tande
  * @LastEditTime: 2019-09-05 13:20:02
@@ -15,14 +15,14 @@ const GeoJsonFromat = new GeoJSON()
  * @return {geomObj} 格式化的空间对象,type 为对象类型，geom 为空间对象的坐标数组
  */
 export function readGeometry(geometry) {
-  let clonReadGeometry = geometry.clone()
-  let geomObj = {}
-  geomObj.type = clonReadGeometry.getType().toString()
-  geomObj.geom = clonReadGeometry.transform('EPSG:3857', 'EPSG:4326').getCoordinates()
-  if (geomObj.type.toLowerCase() === 'polygon') {
-    geomObj.geom = geomObj.geom[0]
-  }
-  return geomObj
+    let clonReadGeometry = geometry.clone()
+    let geomObj = {}
+    geomObj.type = clonReadGeometry.getType().toString()
+    geomObj.geom = clonReadGeometry.transform('EPSG:3857', 'EPSG:4326').getCoordinates()
+    if (geomObj.type.toLowerCase() === 'polygon') {
+        geomObj.geom = geomObj.geom[0]
+    }
+    return geomObj
 }
 
 /**
@@ -31,10 +31,10 @@ export function readGeometry(geometry) {
  * @return {string} 返回的geojson对象
  */
 export function readGeomAsGeoJson(geometry) {
-  let clonReadGeometry = geometry.clone()
-  return GeoJsonFromat.writeGeometry(clonReadGeometry.transform('EPSG:3857', 'EPSG:4326'))
+    let clonReadGeometry = geometry.clone()
+    return GeoJsonFromat.writeGeometry(clonReadGeometry.transform('EPSG:3857', 'EPSG:4326'))
 }
 
 export {
-  CoordTrans
+    CoordTrans
 }

@@ -10,20 +10,19 @@
 </template>
 
 <script>
-  export default {
-    components: {},
-    data () {
-      return {}
-    },
-    mounted () {
-    },
-    methods: {}
-  }
+export default {
+  components: {},
+  data() {
+    return {};
+  },
+  mounted() {},
+  methods: {}
+};
 </script>
 
 <style scoped>
-  a {
-    text-decoration: none;
-    color: #000;
-  }
+a {
+  text-decoration: none;
+  color: #000;
+}
 </style>

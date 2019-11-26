@@ -1,5 +1,5 @@
 <!--
- * @Descripttion: 
+ * @Descripttion:
  * @Date: 2019-09-05 10:19:34
  * @LastEditors: tande
  * @LastEditTime: 2019-09-05 13:19:49
@@ -8,12 +8,16 @@
 <template>
   <el-container>
     <el-col :span="20">
-      <map-base ref="map" style="height: 100%; width: 100%" @mapInited="mapInited"></map-base>
+      <map-base
+        ref="map"
+        style="height: 100%; width: 100%"
+        @mapInited="mapInited"
+      ></map-base>
     </el-col>
     <el-col :span="4" v-loading="isAnalysis">
       <el-row>
         <el-button @click="clickDraw" :type="isDrawing ? 'danger' : 'primary'">
-          {{isDrawing ? '销毁当前交互' : '激活交互'}}
+          {{ isDrawing ? "销毁当前交互" : "激活交互" }}
         </el-button>
       </el-row>
       <el-row>
@@ -26,17 +30,17 @@
 </template>
 
 <script>
-import MapBase from '../components/gis/mapBase'
-import { SeeLayer, Draw, DrawEventType } from '#/index'
+import MapBase from '../components/gis/mapBase';
+import { SeeLayer, Draw, DrawEventType } from '#/index';
 
-const lineFeatureId = 'LINEFEATUREID'
+const lineFeatureId = 'LINEFEATUREID';
 
 export default {
   name: 'short',
   components: {
     MapBase
   },
-  data() {
+  data () {
     return {
       BASE_URL: process.env.BASE_URL,
 
@@ -50,15 +54,21 @@ export default {
   },
   watch: {
     isDrawing: function () {
-      this.$refs.map.thismap.setMouseTips(this.isDrawing ? '单击添加中间节点！' : null)
+      this.$refs.map.thismap.setMouseTips(
+        this.isDrawing ? '单击添加中间节点！' : null
+      )
     }
   },
   methods: {
     mapInited: function () {
-      this.seeLayer = new SeeLayer().addTo(this.$refs.map.thismap).setStyle(this._styleJsonFunction)
+      this.seeLayer = new SeeLayer()
+        .addTo(this.$refs.map.thismap)
+        .setStyle(this._styleJsonFunction)
 
       // 初始化地图交互，只添加点
-      this.draw = new Draw(this.seeLayer, { type: 'Point' }).setMap(this.$refs.map.thismap)
+      this.draw = new Draw(this.seeLayer, { type: 'Point' }).setMap(
+        this.$refs.map.thismap
+      )
       // 监听 绘制完成的事件
       this.draw.on(DrawEventType.DRAWEND, this.drawEnd)
 
@@ -67,7 +77,7 @@ export default {
         this.isDrawing = true
       }
     },
-    clickDraw() {
+    clickDraw () {
       if (this.isDrawing) {
         this.draw.remove()
         this.isDrawing = false
@@ -75,29 +85,34 @@ export default {
         this.isDrawing = true
       }
     },
-    drawEnd(evt) {
+    drawEnd (evt) {
       // 正常结束，取消绘制状态
       this.isDrawing = false
       let saveObj = {
         id: evt.id,
-        coordinates: evt.geometry.clone().transform('EPSG:3857', 'EPSG:4326').getCoordinates()
+        coordinates: evt.geometry
+          .clone()
+          .transform('EPSG:3857', 'EPSG:4326')
+          .getCoordinates()
       }
       this.showResult.push(saveObj)
 
-      this.seeLayer.getFeatureById(saveObj.id).set('index', this.showResult.length.toString())
+      this.seeLayer
+        .getFeatureById(saveObj.id)
+        .set('index', this.showResult.length.toString())
 
       // 再次激活点击绘制功能
       if (this.draw.active()) {
         this.isDrawing = true
       }
     },
-    startAnalysis() {
+    startAnalysis () {
       if (this.showResult.length > 1) {
         this.draw.remove()
         this.isDrawing = false
         // 将点连成线
         let lineCoors = []
-        this.showResult.map((eachPoint) => {
+        this.showResult.map(eachPoint => {
           lineCoors.push(eachPoint.coordinates)
         })
         this.seeLayer.addFeature('line', lineFeatureId, lineCoors)
@@ -107,10 +122,16 @@ export default {
         this.$message.error('中间点少于两个，请至少添加两个点！')
       }
     },
-    _styleJsonFunction(feature, mapZoom) {
+    _styleJsonFunction (feature, mapZoom) {
       let styleJsons = []
 
-      if (feature.getGeometry().getType().toString().toLowerCase() === 'point') {
+      if (
+        feature
+          .getGeometry()
+          .getType()
+          .toString()
+          .toLowerCase() === 'point'
+      ) {
         let indexNumber = feature.get('index')
 
         styleJsons.push({
@@ -147,10 +168,8 @@ export default {
       return styleJsons
     }
   },
-  destroyed() {
-  }
+  destroyed () {}
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

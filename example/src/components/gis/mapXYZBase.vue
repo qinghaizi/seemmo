@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { Map } from '#/index'
+import { Map } from '#/index';
 export default {
   name: 'mapBase',
 
@@ -40,5 +40,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
