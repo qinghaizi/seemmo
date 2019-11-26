@@ -2,7 +2,7 @@
  * @LastEditors: tande
  * @Author: lyuwei
  * @Date: 2019-03-07 14:14:31
- * @LastEditTime: 2019-11-21 14:32:12
+ * @LastEditTime: 2019-11-22 11:41:34
  */
 
 import LayerGroup from "./Layers/LayerGroup";
@@ -188,7 +188,6 @@ export default class SeeMap extends mapboxgl.Map {
 
   /** 加载XYZBaseLayer */
   public addXYZBaseLayer(): void {
-    debugger;
     this._xyzBaseLayer = new XYZBaseLayer(
       `${this.getMapServiceUrl()}`,
       `${this.getLayerTypeOrUrl()}`
@@ -202,6 +201,7 @@ export default class SeeMap extends mapboxgl.Map {
     }
   }
 
+  // 记载矢量地图  暂时未运用到
   /** 加载SeeVectorBaseLayer */
   public addSeeVectorBaseLayer(): void {
     this._vectorBaseLayer = new SeeVectorBaseLayer(
