@@ -2,7 +2,7 @@
  * @LastEditors: tande
  * @Author: lyuwei
  * @Date: 2019-04-08 13:41:13
- * @LastEditTime: 2019-11-21 16:17:28
+ * @LastEditTime: 2019-11-29 11:49:40
  */
 import mapboxglDraw from "@mapbox/mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
@@ -11,8 +11,6 @@ import SeeMap from "../SeeMap";
 import drawRect from "./DrawRect";
 import drawCircle from "./DrawCircle";
 import DrawEvent from "./DrawEvent";
-
-// TODO: 目前支持点线面和矩形框，圆需要额外实现，需要手动自己实现一套，开源的初步查看在排序上会有问题
 
 interface DrawType {
   Select: string | null;
