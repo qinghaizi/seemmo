@@ -6,68 +6,48 @@
  -->
 
 <template>
-  <el-container>
-    <el-col :span="20">
-      <map-base
-        ref="map"
-        style="height: 100%; width: 100%"
-        @mapInited="mapInited"
-      ></map-base>
-    </el-col>
-    <el-col :span="4">
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-select
-            v-model="drawType"
-            :disabled="isDrawing"
-            placeholder="请选择"
-            @change="clickDraw"
-          >
-            <el-option label="点" value="Point"></el-option>
-            <el-option label="线" value="LineString"></el-option>
-            <el-option label="面" value="Polygon"></el-option>
-            <el-option label="圆" value="Circle"></el-option>
-            <el-option label="矩形框" value="Box"></el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="12">
-          <el-checkbox v-model="drawFree" :disabled="isCanDrawFree || isDrawing"
-            >自由绘制</el-checkbox
-          >
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-button @click="clickDraw" :type="isDrawing ? 'danger' : 'primary'">
-          {{ isDrawing ? "销毁当前交互" : "激活交互" }}
-        </el-button>
-      </el-row>
-      <!--展示结果部分-->
-      <el-row>
-        <el-select
-          placeholder="请选择"
-          v-model="selectResult"
-          @change="selectResultChange"
-        >
-          <el-option
-            v-for="eachitem in showResult"
-            :key="eachitem.id"
-            :label="eachitem.id"
-            :value="eachitem"
-          >
-          </el-option>
-        </el-select>
-        <el-button @click="deleteDrawFeature">删除选中的对象</el-button>
-      </el-row>
-    </el-col>
-  </el-container>
+	<el-container>
+		<el-col :span="20">
+			<map-base ref="map" style="height: 100%; width: 100%" @mapInited="mapInited"></map-base>
+		</el-col>
+		<el-col :span="4">
+			<el-row :gutter="20">
+				<el-col :span="12">
+					<el-select v-model="drawType" :disabled="isDrawing" placeholder="请选择" @change="clickDraw">
+						<el-option label="点" value="Point"></el-option>
+						<el-option label="线" value="LineString"></el-option>
+						<el-option label="面" value="Polygon"></el-option>
+						<el-option label="圆" value="Circle"></el-option>
+						<el-option label="矩形框" value="Box"></el-option>
+					</el-select>
+				</el-col>
+				<el-col :span="12">
+					<el-checkbox v-model="drawFree" :disabled="isCanDrawFree || isDrawing">自由绘制</el-checkbox>
+				</el-col>
+			</el-row>
+			<el-row>
+				<el-button @click="clickDraw" :type="isDrawing ? 'danger' : 'primary'">
+					{{ isDrawing ? "销毁当前交互" : "激活交互" }}
+				</el-button>
+			</el-row>
+			<!--展示结果部分-->
+			<el-row>
+				<el-select placeholder="请选择" v-model="selectResult" @change="selectResultChange">
+					<el-option v-for="eachitem in showResult" :key="eachitem.id" :label="eachitem.id" :value="eachitem">
+					</el-option>
+				</el-select>
+				<el-button @click="deleteDrawFeature">删除选中的对象</el-button>
+			</el-row>
+		</el-col>
+	</el-container>
 </template>
 
 <script>
-import MapBase from '../components/gis/mapBase';
-import SeeGate from '#/SeeGate/SeeGate';
-import SeeLayer from '#/SeeLayer/SeeLayer';
-import Draw from '#/Draw/Draw';
-import DrawEventType from '#/Draw/DrawEventType';
+import MapBase from '../components/gis/mapBase'
+import SeeGate from '#/SeeGate/SeeGate'
+import SeeLayer from '#/SeeLayer/SeeLayer'
+import Draw from '#/Draw/Draw'
+import DrawEventType from '#/Draw/DrawEventType'
 
 export default {
   name: 'feature',
@@ -168,7 +148,7 @@ export default {
   },
   computed: {
     isCanDrawFree () {
-      return this.drawType !== 'LineString' && this.drawType !== 'Polygon';
+      return this.drawType !== 'LineString' && this.drawType !== 'Polygon'
     }
   },
 
@@ -208,7 +188,7 @@ export default {
         }
       }
       if (feature.get('selected')) {
-        json.image.value.src = this.BASE_URL + 'gate/warm.png';
+        json.image.value.src = this.BASE_URL + 'gate/warm.png'
       }
       return json
     },
@@ -216,7 +196,7 @@ export default {
     clickDraw () {
       if (!this.drawType) {
         this.$message.error('请选择需要绘制的对象类型！')
-        return;
+        return
       }
       if (this.isDrawing) {
         // 销毁

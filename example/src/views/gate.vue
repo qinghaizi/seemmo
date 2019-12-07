@@ -6,74 +6,34 @@
  -->
 
 <template>
-  <el-container>
-    <el-main>
-      <map-base
-        ref="map"
-        style="height: 100%; width: 100%"
-        @mapInited="mapInited"
-      ></map-base>
-    </el-main>
-    <el-aside width="300px">
-      <div class="tree-area">
-        <el-tree
-          v-show="isShowTree"
-          :data="gateDatas"
-          :props="defaultProps"
-        ></el-tree>
-        <el-tag
-          v-show="currentGate"
-          type="success"
-          style="float:left;margin-top:10px;"
-          >当前选中:{{ currentGate }}</el-tag
-        >
-      </div>
-      <div>
-        <el-row class="btn-wrap">
-          <el-button
-            @click="createGateFeatures"
-            v-show="level === 1"
-            type="primary"
-            >创建卡口</el-button
-          >
-          <el-button @click="setStyle" v-show="level === 2" type="primary"
-            >自定义卡口样式</el-button
-          >
-          <el-button
-            @click="setSelectedGates"
-            v-show="level === 3"
-            type="primary"
-            >一键选中5,21,7</el-button
-          >
-          <el-button
-            @click="getSelectGateIds"
-            v-show="level === 4"
-            type="primary"
-            >获取已选择卡口id</el-button
-          >
-        </el-row>
-        <el-row class="btn-wrap">
-          <el-button
-            @click.once="addGateFeatures"
-            v-show="level === 2"
-            type="primary"
-            >再加一些卡口</el-button
-          >
-          <el-button
-            @click="changeGateClickEnable"
-            v-show="level === 3"
-            type="primary"
-            >设置卡口点击交互</el-button
-          >
-        </el-row>
-      </div>
-    </el-aside>
-  </el-container>
+	<el-container>
+		<el-main>
+			<map-base ref="map" style="height: 100%; width: 100%" @mapInited="mapInited"></map-base>
+		</el-main>
+		<el-aside width="300px">
+			<div class="tree-area">
+				<el-tree v-show="isShowTree" :data="gateDatas" :props="defaultProps"></el-tree>
+				<el-tag v-show="currentGate" type="success" style="float:left;margin-top:10px;">当前选中:{{ currentGate }}</el-tag>
+			</div>
+			<div>
+				<el-row class="btn-wrap">
+					<el-button @click="createGateFeatures" v-show="level === 1" type="primary">创建卡口</el-button>
+					<el-button @click="setStyle" v-show="level === 2" type="primary">自定义卡口样式</el-button>
+					<el-button @click="setSelectedGates" v-show="level === 3" type="primary">一键选中5,21,7</el-button>
+					<el-button @click="getSelectGateIds" v-show="level === 4" type="primary">获取已选择卡口id</el-button>
+				</el-row>
+				<el-row class="btn-wrap">
+					<el-button @click.once="addGateFeatures" v-show="level === 2" type="primary">再加一些卡口</el-button>
+					<el-button @click="changeGateClickEnable" v-show="level === 3" type="primary">设置卡口点击交互</el-button>
+				</el-row>
+			</div>
+		</el-aside>
+	</el-container>
 </template>
 
 <script>
-import MapBase from '../components/gis/mapBase';
-import { SeeGate, SeeGateEventType } from '#/index';
+import MapBase from '../components/gis/mapBase'
+import { SeeGate, SeeGateEventType } from '#/index'
 export default {
   name: 'gate',
   components: {
@@ -292,7 +252,7 @@ export default {
         }
       }
       if (feature.get('selected')) {
-        json.image.value.src = this.BASE_URL + 'gate/warm.png';
+        json.image.value.src = this.BASE_URL + 'gate/warm.png'
       }
       return json
     }
@@ -306,9 +266,9 @@ export default {
 
 <style scoped>
 .tree-area {
-  height: 50%;
+	height: 50%;
 }
 .btn-wrap {
-  margin-top: 10px;
+	margin-top: 10px;
 }
 </style>

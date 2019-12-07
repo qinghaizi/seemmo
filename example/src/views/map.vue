@@ -6,37 +6,25 @@
  -->
 
 <template>
-  <el-container>
-    <el-main>
-      <map-base
-        ref="map"
-        style="height: 100%; width: 100%"
-        @mapInited="mapInited"
-      ></map-base>
-    </el-main>
-    <el-aside width="300px">
-      <div>
-        <el-button @click="isShowMouseTips = true" type="primary"
-          >设置鼠标提示</el-button
-        >
-        <el-button @click="isShowMouseTips = false" type="primary"
-          >去掉鼠标提示</el-button
-        >
-        <el-alert
-          title="单击地图可创建卡口"
-          type="success"
-          style="margin-top:20px;"
-        >
-        </el-alert>
-      </div>
-    </el-aside>
-  </el-container>
+	<el-container>
+		<el-main>
+			<map-base ref="map" style="height: 100%; width: 100%" @mapInited="mapInited"></map-base>
+		</el-main>
+		<el-aside width="300px">
+			<div>
+				<el-button @click="isShowMouseTips = true" type="primary">设置鼠标提示</el-button>
+				<el-button @click="isShowMouseTips = false" type="primary">去掉鼠标提示</el-button>
+				<el-alert title="单击地图可创建卡口" type="success" style="margin-top:20px;">
+				</el-alert>
+			</div>
+		</el-aside>
+	</el-container>
 </template>
 
 <script>
-import MapBase from '../components/gis/mapBase';
-import { SeeGate } from '#/index';
-import { toLonLat } from 'ol/proj';
+import MapBase from '../components/gis/mapBase'
+import { SeeGate } from '#/index'
+import { toLonLat } from 'ol/proj'
 export default {
   name: 'gate',
   components: {
@@ -237,7 +225,7 @@ export default {
         }
       }
       if (feature.get('selected')) {
-        json.image.value.src = this.BASE_URL + 'gate/warm.png';
+        json.image.value.src = this.BASE_URL + 'gate/warm.png'
       }
       return json
     }
@@ -251,6 +239,6 @@ export default {
 
 <style scoped>
 .tree-area {
-  height: 50%;
+	height: 50%;
 }
 </style>
