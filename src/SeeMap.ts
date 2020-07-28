@@ -2,7 +2,7 @@
  * @LastEditors: tande
  * @Author: lyuwei
  * @Date: 2019-03-07 14:14:31
- * @LastEditTime: 2019-11-22 11:41:34
+ * @LastEditTime: 2020-07-28 11:11:18
  */
 
 import LayerGroup from "./Layers/LayerGroup";
@@ -107,6 +107,9 @@ export default class SeeMap extends mapboxgl.Map {
           window.location.origin + getOptions.resourceUrl;
       }
     }
+    var mapboxgl = require("mapbox-gl/dist/mapbox-gl.js");
+    mapboxgl.accessToken =
+      "pk.eyJ1IjoidGFuZGUxMTIzIiwiYSI6ImNrMzhrM3Y5dzA4cXEzbXFzMHducnM1bWUifQ.H85b1_klhicWOUq6B-IQFQ";
     let mapboxOptions: mapboxgl.MapboxOptions = {
       container: mapdivOrId,
       zoom: getOptions.zoom,
@@ -116,14 +119,15 @@ export default class SeeMap extends mapboxgl.Map {
       minZoom: getOptions.minZoom,
       pitch: getOptions.pitch,
       bearing: getOptions.bearing,
-      // 雪碧图和基本的字体位置
-      style: {
-        version: 8,
-        sprite: `${getOptions.resourceUrl}/sprite`,
-        glyphs: `${getOptions.resourceUrl}/font/{fontstack}/{range}.pbf`,
-        sources: {},
-        layers: []
-      }
+      // // 雪碧图和基本的字体位置
+      // style: {
+      //   version: 8,
+      //   sprite: `${getOptions.resourceUrl}/sprite`,
+      //   glyphs: `${getOptions.resourceUrl}/font/{fontstack}/{range}.pbf`,
+      //   sources: {},
+      //   layers: []
+      // }
+      style: "mapbox://styles/mapbox/light-v10"
     };
     if (getOptions.extendOptions) {
       mapboxOptions = assign(mapboxOptions, getOptions.extendOptions);
@@ -163,19 +167,62 @@ export default class SeeMap extends mapboxgl.Map {
     this.mouseTips = new Tips({}).addTo(this);
 
     this.on("load", () => {
-      // 根据底图类型判断加载XYZBase还是VectorBase
-      if (this._baselayerType === "vector") {
-        this.addSeeVectorBaseLayer();
-      } else if (this._baselayerType === "xyz") {
-        this.addXYZBaseLayer();
+      // // 根据底图类型判断加载XYZBase还是VectorBase
+      // if (this._baselayerType === "vector") {
+      //   this.addSeeVectorBaseLayer();
+      // } else if (this._baselayerType === "xyz") {
+      //   this.addXYZBaseLayer();
+      // }
+      // // 2. 如果设置有底图范围，则初始化到指定的范围
+      // if (getOptions.bounds) {
+      //   this.moveToExtent(getOptions.bounds);
+      // }
+      // if (getOptions.zoomSlide) {
+      //   this.addControl(new mapboxgl.NavigationControl());
+      // }
+      let layers = this.getStyle().layers;
+
+      var labelLayerId;
+      for (var i = 0; i < layers.length; i++) {
+        if (layers[i].type === "symbol" && layers[i].layout["text-field"]) {
+          labelLayerId = layers[i].id;
+          break;
+        }
       }
-      // 2. 如果设置有底图范围，则初始化到指定的范围
-      if (getOptions.bounds) {
-        this.moveToExtent(getOptions.bounds);
-      }
-      if (getOptions.zoomSlide) {
-        this.addControl(new mapboxgl.NavigationControl());
-      }
+
+      this.addLayer(
+        {
+          id: "3d-buildings",
+          source: "composite",
+          "source-layer": "building",
+          filter: ["==", "extrude", "true"],
+          type: "fill-extrusion",
+          minzoom: 15,
+          paint: {
+            "fill-extrusion-color": "#aaa",
+            "fill-extrusion-height": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              15,
+              0,
+              15.05,
+              ["get", "height"]
+            ],
+            "fill-extrusion-base": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              15,
+              0,
+              15.05,
+              ["get", "min_height"]
+            ],
+            "fill-extrusion-opacity": 0.6
+          }
+        },
+        labelLayerId
+      );
     });
     // init event
     this._initEvent();
