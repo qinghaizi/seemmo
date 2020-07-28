@@ -1,9 +1,3 @@
-/*
- * @LastEditors: tande
- * @Author: lyuwei
- * @Date: 2019-04-08 13:41:13
- * @LastEditTime: 2019-11-29 11:49:40
- */
 import mapboxglDraw from "@mapbox/mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import Observable from "../Core/Observable";

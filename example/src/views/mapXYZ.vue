@@ -1,16 +1,10 @@
-<!--
- * @LastEditors: zhangliquan
- * @Author: zhangliquan
- * @Date: 2019年8月7日11:16:20
- * @LastEditTime: 2019年8月7日11:16:20
- -->
 
 <template>
-  <el-container>
-    <el-main>
-      <map-base ref="map" style="height: 100%; width: 100%" @mapInited="mapInited"></map-base>
-    </el-main>
-  </el-container>
+	<el-container>
+		<el-main>
+			<map-base ref="map" style="height: 100%; width: 100%" @mapInited="mapInited"></map-base>
+		</el-main>
+	</el-container>
 </template>
 
 <script>
@@ -40,6 +34,6 @@ export default {
 
 <style scoped>
 .tree-area {
-  height: 50%;
+	height: 50%;
 }
 </style>
