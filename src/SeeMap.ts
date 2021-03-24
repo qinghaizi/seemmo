@@ -1,9 +1,4 @@
-/*
- * @LastEditors: tande
- * @Author: lyuwei
- * @Date: 2019-03-07 14:14:31
- * @LastEditTime: 2020-07-28 11:11:18
- */
+
 
 import LayerGroup from "./Layers/LayerGroup";
 import BaseLayer from "./Layers/BaseLayer";
