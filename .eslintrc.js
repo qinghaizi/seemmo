@@ -15,6 +15,7 @@ module.exports = {
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off', //不允许出现debugger语句
         // "linebreak-style": ["error","windows"],
         'comma-dangle': ['off', 'never'], //是否允许对象中出现结尾逗号
+        'no-tabs': 'off',
         // 'no-cond-assign': 2, //条件语句的条件中不允许出现赋值运算符
         // 'no-constant-condition': 2, //条件语句的条件中不允许出现恒定不变的量
         // 'no-control-regex': 2, //正则表达式中不允许出现控制字符

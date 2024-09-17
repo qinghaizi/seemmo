@@ -1,22 +1,22 @@
 <!--
- * @LastEditors: zhangliquan
+ * @LastEditors: tande
  * @Author: zhangliquan
  * @Date: 2019-6-13 09:15:17
- * @LastEditTime: 2019-6-13 09:15:17
+ * @LastEditTime: 2019-11-25 18:16:35
  -->
 
 <template>
-  <el-container>
-    <el-main>
-      <map-base ref="map" style="height: 100%; width: 100%" @mapInited="mapInited"></map-base>
-    </el-main>
-    <el-aside width="300px">
-      <div>
-        <el-button @click="addmarker" type="primary">添加marker</el-button>
-        <el-button @click="removemarker" type="primary">移除marker</el-button>
-      </div>
-    </el-aside>
-  </el-container>
+	<el-container>
+		<el-main>
+			<map-base ref="map" style="height: 100%; width: 100%" @mapInited="mapInited"></map-base>
+		</el-main>
+		<el-aside width="300px">
+			<div>
+				<el-button @click="addmarker" type="primary">添加marker</el-button>
+				<el-button @click="removemarker" type="primary">移除marker</el-button>
+			</div>
+		</el-aside>
+	</el-container>
 </template>
 
 <script>
@@ -38,7 +38,6 @@ export default {
 
     },
     addmarker: function () {
-      debugger
       let seemap = this.$refs.map.thismap
       let markeroption = {
 
@@ -53,7 +52,6 @@ export default {
         this.marker.remove()
       }
     }
-
   },
   mounted () { },
   destroyed () {
@@ -64,6 +62,6 @@ export default {
 
 <style scoped>
 .tree-area {
-  height: 50%;
+	height: 50%;
 }
 </style>

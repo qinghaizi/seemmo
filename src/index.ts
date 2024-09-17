@@ -1,14 +1,4 @@
-/*
- * @Descripttion:
- * @Date: 2019-09-05 13:16:58
- * @LastEditors: tande
- * @LastEditTime: 2019-09-05 13:17:23
- */
 
-//
-// export * from './SeeLayer'
-// export * from './Draw'
-// export * from './SeeMapPop'
 
 export { default as Map } from "./SeeMap";
 export { default as Draw } from "./Draw";
